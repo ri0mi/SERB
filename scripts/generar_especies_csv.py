@@ -37,8 +37,8 @@ SPECIES = [
      "script_data_rcimg.py trae 'No especificada' (placeholder, no es un dato real); se usa el valor de especies.txt."),
     ("Cornus disciflora", "Aceitunillo", "segura", "", "no", 1,
      "script_data_rcimg.py trae 'No especificada' (placeholder, no es un dato real); se usa el valor de especies.txt."),
-    ("Prunus serotina", "Capulín", "desconocida", "", "no", 1,
-     "CONFLICTO: especies.txt dice 'Segura', script_data_rcimg.py dice 'Toxica'. Ya señalado en CLAUDE.md. No se resuelve aquí, pendiente de fuente citable."),
+    ("Prunus serotina", "Capulín", "toxica", "hojas, semilla, corteza", "no", 1,
+     "Conflicto previo entre especies.txt ('Segura') y script_data_rcimg.py ('Toxica') resuelto por decisión explícita del responsable del proyecto: toxica. Pulpa madura comestible; el resto (hojas, semilla, corteza) contiene glucósidos cianogénicos."),
     ("Alnus acuminata", "Aile / Abedul", "segura", "", "no", 1, ""),
     ("Fraxinus uhdei", "Fresno", "segura", "", "no", 1,
      "especies.txt tiene el nombre mal escrito como 'Fraxinus udhei' (typo, carpeta vacía ya eliminada); la ortografía correcta 'uhdei' aparece en script_data_rcimg.py y coincide con la carpeta en disco."),
@@ -49,7 +49,8 @@ SPECIES = [
     ("Ostrya virginiana", "Guayabillo", "segura", "", "no", 1,
      "Solo 5 imágenes: según CLAUDE.md es por el filtro stateProvince=Jalisco (la especie es común en Norteamérica), no escasez real."),
     ("Ilex toluccana", "Acebo", "toxica", "frutos", "no", 1,
-     "Sin carpeta en disco (n_imagenes_actuales=0), incluida por instrucción explícita. especies.txt: 'Frutos tóxicos'."),
+     "Sin carpeta en disco (n_imagenes_actuales=0), incluida por instrucción explícita. especies.txt: 'Frutos tóxicos'. "
+     "El match FUZZY a 'Ilex tolucana' (sinónimo de Ilex discolor) requiere verificación externa antes de tratarlo como confirmado; no se excluye todavía."),
 
     # --- bloque 2 (especies.txt bloque_2_especies) ---
     ("Quercus magnoliifolia", "Encino de hoja grande", "segura", "", "no", 2, ""),
@@ -88,10 +89,10 @@ SPECIES = [
     ("Jatropha curcas", "Piñón mexicano", "toxica", "", "no", 3,
      "Prioridad máxima de recolección per CLAUDE.md (intoxicaciones pediátricas frecuentes en México, solo 9 imágenes)."),
     ("Phytolacca icosandra", "Congueranza", "toxica", "", "no", 3, ""),
-    ("Euphorbia tanquahuete", "Pegahueso", "desconocida", "", "no", 3,
-     "script_data.py trae la etiqueta ambigua 'No especificada/Segura' (la propia fuente no está segura); no se resuelve, pendiente de fuente citable."),
-    ("Plumeria rubra", "Cacaloxóchitl", "desconocida", "", "no", 3,
-     "script_data.py trae la etiqueta ambigua 'No especificada/Segura'; no se resuelve, pendiente de fuente citable."),
+    ("Euphorbia tanquahuete", "Pegahueso", "irritante", "látex", "no", 3,
+     "script_data.py traía la etiqueta ambigua 'No especificada/Segura'; resuelto por decisión explícita del responsable del proyecto: irritante (látex)."),
+    ("Plumeria rubra", "Cacaloxóchitl", "irritante", "látex", "no", 3,
+     "script_data.py traía la etiqueta ambigua 'No especificada/Segura'; resuelto por decisión explícita del responsable del proyecto: irritante (látex)."),
     ("Salvia mexicana", "Salvia de México", "desconocida", "", "no", 3,
      "script_data.py trae la etiqueta ambigua 'No especificada/Segura'; no se resuelve, pendiente de fuente citable."),
     ("Salvia lavanduloides", "Salvia cimarrona", "desconocida", "", "no", 3,
@@ -101,12 +102,12 @@ SPECIES = [
     ("Dahlia coccinea", "Dalia roja", "segura", "", "no", 3, ""),
     ("Cosmos bipinnatus", "Cosmos / Mirasol", "segura", "", "no", 3, ""),
     ("Zinnia peruviana", "Mal de ojo", "segura", "", "no", 3, ""),
-    ("Montanoa tomentosa", "Zoapatle", "desconocida", "", "no", 3,
-     "script_data.py solo dice 'Medicinal', sin calificativo de seguridad explícito (uso medicinal no implica ausencia de riesgo); prioridad de recolección per CLAUDE.md (solo 11 imágenes)."),
+    ("Montanoa tomentosa", "Zoapatle", "toxica", "", "no", 3,
+     "script_data.py solo decía 'Medicinal', sin calificativo de seguridad explícito; resuelto por decisión explícita del responsable del proyecto: toxica (uterotónico, contraindicado en embarazo). Prioridad de recolección per CLAUDE.md (solo 11 imágenes)."),
     ("Baccharis salicifolia", "Jara", "segura", "", "no", 3, ""),
     ("Dodonaea viscosa", "Jarilla", "segura", "", "no", 3, ""),
-    ("Datura stramonium", "", "desconocida", "", "no", 3,
-     "No aparece en especies.txt, script_data.py ni script_data_rcimg.py -- solo existe la carpeta en disco (sin nombre común ni etiqueta de toxicidad en ninguna fuente del proyecto). Incluida por instrucción explícita. Sin dato = desconocida; NO se usa conocimiento del modelo sin referencia citable (ver CLAUDE.md), pendiente de investigación con fuente."),
+    ("Datura stramonium", "", "toxica", "toda", "no", 3,
+     "No aparece en especies.txt, script_data.py ni script_data_rcimg.py -- solo existe la carpeta en disco (sin nombre común ni etiqueta de toxicidad en ninguna fuente del proyecto). Incluida por instrucción explícita. Riesgo resuelto por decisión explícita del responsable del proyecto: toxica, alcaloides tropánicos."),
 
     # --- bloque 4 (especies.txt bloque_4_especies) ---
     ("Agave guadalajarana", "Maguey de Guadalajara", "irritante", "savia", "si", 4,
@@ -139,11 +140,21 @@ SPECIES = [
      "especies.txt: 'Semillas/Raíces tóxicas'."),
     ("Begonia jaliscana", "Begonia silvestre", "segura", "", "desconocida", 4,
      "El epíteto 'jaliscana' sugiere endemismo pero ninguna fuente del proyecto lo confirma explícitamente; pendiente de revisión."),
-    ("Oxalis hernandezii", "Agritos", "desconocida", "", "no", 4,
-     "especies.txt trae la etiqueta internamente contradictoria 'Segura/Oxalatos' (los oxalatos suelen ser irritantes); no se resuelve aquí, pendiente de fuente citable."),
+    ("Oxalis hernandezii", "Agritos", "segura", "", "no", 4,
+     "especies.txt traía la etiqueta internamente contradictoria 'Segura/Oxalatos'; resuelto por decisión explícita del responsable del proyecto: segura. Contiene oxalatos, evitar consumo en cantidad."),
 ]
 
 assert len(SPECIES) == 80, f"se esperaban 80 especies, hay {len(SPECIES)}"
+
+# Overrides puntuales decididos por el responsable del proyecto (no
+# derivables de especies.txt / script_data.py / script_data_rcimg.py).
+ESTATUS_OVERRIDES = {
+    "Datura stramonium": "introducida",
+}
+
+EXCLUSIONES = {
+    "Echeveria jaliscensis": "nombre no verificable en GBIF, 0 imágenes, pendiente de confirmación con herbario IBUG",
+}
 
 
 def folder_for(bloque, sci_name):
@@ -189,10 +200,18 @@ for sci_name, common_name, riesgo, parte, endemica, bloque, notas in SPECIES:
     d = gbif_match(sci_name)
     time.sleep(0.15)
 
-    usage_key = d.get("usageKey", "")
+    original_usage_key = d.get("usageKey", "")
     accepted = accepted_name_from(d)
     rank = d.get("rank", "")
     match_type = d.get("matchType", "NONE")
+    status = d.get("status", "")
+
+    # Si GBIF trata el nombre del proyecto como sinónimo, se usa el
+    # usageKey del nombre aceptado para consultas futuras (occurrence
+    # search, etc.), y se deja constancia del usageKey original en notas.
+    usage_key = original_usage_key
+    if status == "SYNONYM" and d.get("acceptedUsageKey"):
+        usage_key = d["acceptedUsageKey"]
 
     flags = []
     if rank and rank != "SPECIES":
@@ -208,10 +227,19 @@ for sci_name, common_name, riesgo, parte, endemica, bloque, notas in SPECIES:
         notas_final = f"{notas_final} {marca}".strip() if notas_final else marca
         no_limpio.append((sci_name, "; ".join(flags)))
 
+    if status == "SYNONYM" and usage_key != original_usage_key:
+        swap_note = (
+            f"Nombre del proyecto '{sci_name}' (usageKey original {original_usage_key}) es sinónimo GBIF "
+            f"de '{accepted}'; se usa el usageKey del nombre aceptado ({usage_key}) para consultas futuras."
+        )
+        notas_final = f"{notas_final} {swap_note}".strip() if notas_final else swap_note
+
     if riesgo == "desconocida" and "CONFLICTO" in notas:
         conflictos.append((sci_name, notas))
     elif riesgo == "desconocida" and notas:
         conflictos.append((sci_name, notas))
+
+    motivo_exclusion = EXCLUSIONES.get(sci_name, "")
 
     rows.append({
         "scientific_name": sci_name,
@@ -223,20 +251,22 @@ for sci_name, common_name, riesgo, parte, endemica, bloque, notas in SPECIES:
         "riesgo": riesgo,
         "parte_afectada": parte,
         "endemica": endemica,
-        "estatus": "",
+        "estatus": ESTATUS_OVERRIDES.get(sci_name, ""),
         "bloque": bloque,
         "n_imagenes_actuales": n_img,
         "fuente_toxicidad": "",
         "url_fuente": "",
         "descripcion": "",
         "notas": notas_final,
+        "excluida": "si" if motivo_exclusion else "no",
+        "motivo_exclusion": motivo_exclusion,
     })
 
 fieldnames = [
     "scientific_name", "usage_key", "accepted_name", "rank", "match_type",
     "common_name", "riesgo", "parte_afectada", "endemica", "estatus",
     "bloque", "n_imagenes_actuales", "fuente_toxicidad", "url_fuente",
-    "descripcion", "notas",
+    "descripcion", "notas", "excluida", "motivo_exclusion",
 ]
 
 with open(OUT_CSV, "w", newline="", encoding="utf-8") as f:
