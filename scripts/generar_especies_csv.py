@@ -15,6 +15,7 @@ import requests
 ROOT = "."
 OUT_CSV = os.path.join(ROOT, "especies.csv")
 MATCH_URL = "https://api.gbif.org/v1/species/match"
+SPECIES_URL = "https://api.gbif.org/v1/species"
 
 # scientific_name, common_name, riesgo, parte_afectada, endemica, bloque, notas_base
 # riesgo ya decidido siguiendo el enum cerrado de CLAUDE.md; notas_base documenta
@@ -84,7 +85,9 @@ SPECIES = [
     ("Solanum nigrescens", "Hierba mora", "toxica", "", "no", 3,
      "Coincide entre script_data.py y script_data_rcimg.py."),
     ("Solanum rostratum", "Duraznillo", "toxica", "", "no", 3,
-     "script_data.py: 'Tóxica/Espinosa' (espinoso es daño físico, no contradice la toxicidad)."),
+     "script_data.py: 'Tóxica/Espinosa' (espinoso es daño físico, no contradice la toxicidad). "
+     "Se confirma el uso del usageKey de S. angustifolium (2929800) como nombre aceptado GBIF; sin embargo la literatura local y toxicológica "
+     "usa 'Solanum rostratum' -- prioridad de publicación Houst. ex Mill. 1768 sobre Dunal 1813."),
     ("Ricinus communis", "Higuerilla", "letal", "semillas", "no", 3, ""),
     ("Jatropha curcas", "Piñón mexicano", "toxica", "", "no", 3,
      "Prioridad máxima de recolección per CLAUDE.md (intoxicaciones pediátricas frecuentes en México, solo 9 imágenes)."),
@@ -179,14 +182,36 @@ def gbif_match(name):
         return {"_error": str(e)}
 
 
-def accepted_name_from(d):
-    match_type = d.get("matchType", "NONE")
-    if match_type == "NONE" or "_error" in d:
-        return ""
-    status = d.get("status", "")
-    if status == "SYNONYM":
-        return d.get("species") or d.get("genus") or d.get("canonicalName") or ""
-    return d.get("canonicalName") or ""
+RANK_MARKERS = {"VARIETY": "var.", "SUBSPECIES": "subsp.", "FORM": "f."}
+
+
+def format_canonical(canonical, rank):
+    """canonicalName no trae marcador de rango infraespecífico (p.ej. da
+    'Ilex discolor tolucana' para una VARIETY); lo insertamos para que el
+    nombre quede legible: 'Ilex discolor var. tolucana'."""
+    marker = RANK_MARKERS.get(rank)
+    if marker and canonical and canonical.count(" ") >= 2:
+        genus_species, epithet = canonical.rsplit(" ", 1)
+        return f"{genus_species} {marker} {epithet}"
+    return canonical
+
+
+def gbif_species(key):
+    """Consulta species/{key} -- el taxón real al que apunta ese usageKey.
+
+    No usar el campo 'species' de /match para accepted_name: ese campo da
+    el ancestro a rango de especie, no el taxón aceptado real (bug
+    detectado con Ilex toluccana -> el usageKey aceptado es una VARIEDAD,
+    'species' devolvía la especie padre). accepted_name y rank siempre
+    deben salir de una consulta directa a /species/{usage_key}.
+    """
+    if not key:
+        return {}
+    try:
+        resp = requests.get(f"{SPECIES_URL}/{key}", timeout=15)
+        return resp.json()
+    except Exception as e:
+        return {"_error": str(e)}
 
 
 rows = []
@@ -201,8 +226,6 @@ for sci_name, common_name, riesgo, parte, endemica, bloque, notas in SPECIES:
     time.sleep(0.15)
 
     original_usage_key = d.get("usageKey", "")
-    accepted = accepted_name_from(d)
-    rank = d.get("rank", "")
     match_type = d.get("matchType", "NONE")
     status = d.get("status", "")
 
@@ -212,6 +235,11 @@ for sci_name, common_name, riesgo, parte, endemica, bloque, notas in SPECIES:
     usage_key = original_usage_key
     if status == "SYNONYM" and d.get("acceptedUsageKey"):
         usage_key = d["acceptedUsageKey"]
+
+    detail = gbif_species(usage_key)
+    time.sleep(0.15)
+    rank = detail.get("rank", "") or ""
+    accepted = format_canonical(detail.get("canonicalName", "") or "", rank)
 
     flags = []
     if rank and rank != "SPECIES":
