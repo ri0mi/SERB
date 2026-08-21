@@ -14,7 +14,9 @@ import argparse
 import csv
 import io
 import os
+import threading
 import time
+from concurrent.futures import ThreadPoolExecutor, as_completed
 
 import requests
 from PIL import Image, UnidentifiedImageError
@@ -25,9 +27,11 @@ MANIFIESTO_CSV = os.path.join(ROOT, "manifiesto_imagenes.csv")
 SEARCH_URL = "https://api.gbif.org/v1/occurrence/search"
 
 PAGE_SIZE = 300  # máximo permitido por GBIF occurrence/search
-SLEEP_SEC = 0.3
+SLEEP_SEC = 0.3  # cortesía SOLO para /occurrence/search, no para descargar archivos
 REQUEST_TIMEOUT = 20
 DOWNLOAD_TIMEOUT = 15
+MAX_WORKERS = 10   # descargas de imagen en paralelo
+CHUNK_OCC = 8      # ocurrencias por vuelta de ronda (se reparten al pool)
 
 RIESGO_ALTO = {"toxica", "letal", "irritante"}
 META_ALTA = 150
@@ -189,94 +193,170 @@ def dry_run(especies):
     return filas
 
 
-def descargar(especies):
+def agrupar_por_clase_v1(especies):
+    """especies en_v1=si, agrupadas por clase_v1 (una o varias especies por clase)."""
+    grupos = {}
+    for row in especies:
+        if row.get("en_v1", "").strip().lower() != "si":
+            continue
+        grupos.setdefault(row["clase_v1"], []).append(row)
+    return grupos
+
+
+def _grupo_agotado(estado, miembros):
+    return all(
+        estado[m["scientific_name"]]["agotado"] and not estado[m["scientific_name"]]["buffer"]
+        for m in miembros
+    )
+
+
+def _descargar_una_imagen(folder, sci_name, occ_key, n, url, media, record):
+    """Se ejecuta en un worker thread: descarga+valida+escribe UN archivo
+    (nombre único por occ_key/n, sin necesidad de lock). Devuelve la fila
+    de manifiesto lista para escribir, o None si falló la validación."""
+    resultado = descargar_y_validar(url)
+    if resultado is None:
+        return None
+    content, ancho, alto = resultado
+
+    file_name = f"{occ_key}_{n}.jpg"
+    file_path = os.path.join(folder, file_name)
+    with open(file_path, "wb") as f:
+        f.write(content)
+
+    license_ = media.get("license") or record.get("license") or ""
+    rights_holder = media.get("rightsHolder") or record.get("rightsHolder") or ""
+
+    return {
+        "archivo": file_name,
+        "especie": sci_name,
+        "occurrence_key": occ_key,
+        "url_original": url,
+        "license": license_,
+        "rights_holder": rights_holder,
+        "ancho": ancho,
+        "alto": alto,
+    }
+
+
+def descargar_clase(clase_v1, miembros, keys_existentes, manifiesto_writer, manifiesto_f,
+                     manifiesto_lock, executor, deadline=None):
+    """Descarga hasta la meta de la clase, repartiendo round-robin entre
+    sus especies miembro (CHUNK_OCC ocurrencias por vuelta, descargadas
+    en paralelo). El manifiesto siempre guarda el scientific_name real
+    de la especie de cada imagen, aunque la clase esté agrupada.
+
+    Si `deadline` (time.monotonic()) se alcanza, se detiene de forma
+    limpia -- lo ya descargado queda en disco/manifiesto, y una corrida
+    posterior retoma la clase donde se quedó (cuenta imágenes en disco +
+    occurrence_key ya visto)."""
+    riesgo = miembros[0]["riesgo"]
+    meta = meta_para(riesgo)
+
+    for m in miembros:
+        os.makedirs(folder_for(m), exist_ok=True)
+
+    total = sum(contar_imagenes_disco(folder_for(m)) for m in miembros)
+
+    if total >= meta:
+        print(f">> {clase_v1}: meta ya cubierta ({total}/{meta})")
+        return "completa"
+
+    print(f"\n>> {clase_v1} ({len(miembros)} especie(s): {[m['scientific_name'] for m in miembros]}, "
+          f"meta={meta}, ya tiene {total})")
+
+    estado = {
+        m["scientific_name"]: {"offset": 0, "agotado": False, "buffer": []}
+        for m in miembros
+    }
+
+    idx = 0
+    while total < meta and not _grupo_agotado(estado, miembros):
+        if deadline is not None and time.monotonic() >= deadline:
+            print(f"   [TIEMPO AGOTADO] {clase_v1}: {total}/{meta}, se retoma en la próxima corrida")
+            return "incompleta"
+
+        m = miembros[idx % len(miembros)]
+        idx += 1
+        sci_name = m["scientific_name"]
+        taxon_key = m["usage_key"]
+        st = estado[sci_name]
+
+        if st["agotado"] and not st["buffer"]:
+            continue
+
+        if not st["buffer"]:
+            data = buscar_pagina(taxon_key, st["offset"])
+            time.sleep(SLEEP_SEC)  # cortesía solo para /occurrence/search
+            resultados = data.get("results", [])
+            st["offset"] += len(resultados)
+            st["buffer"] = resultados
+            if not resultados or data.get("endOfRecords"):
+                st["agotado"] = True
+            if not resultados:
+                continue
+
+        # toma hasta CHUNK_OCC ocurrencias nuevas (sin duplicados) de este miembro
+        chunk = []
+        while st["buffer"] and len(chunk) < CHUNK_OCC:
+            record = st["buffer"].pop(0)
+            occ_key = record.get("key")
+            if occ_key is None or str(occ_key) in keys_existentes:
+                continue
+            media_items = record.get("media") or []
+            if not media_items:
+                continue
+            chunk.append((occ_key, record, media_items))
+
+        if not chunk:
+            continue
+
+        # aplana el chunk en tareas de imagen individuales y las reparte al pool
+        tareas = [
+            (folder_for(m), sci_name, occ_key, n, media.get("identifier"), media, record)
+            for occ_key, record, media_items in chunk
+            for n, media in enumerate(media_items)
+            if media.get("identifier")
+        ]
+
+        futuros = {executor.submit(_descargar_una_imagen, *t): t for t in tareas}
+        occ_con_exito = set()
+        for fut in as_completed(futuros):
+            fila = fut.result()
+            if fila is None:
+                continue
+            with manifiesto_lock:
+                manifiesto_writer.writerow(fila)
+                manifiesto_f.flush()
+            total += 1
+            occ_con_exito.add(fila["occurrence_key"])
+            print(f"   [OK] {sci_name}: {fila['archivo']} ({total}/{meta})")
+
+        for occ_key, _, _ in chunk:
+            if occ_key in occ_con_exito:
+                keys_existentes.add(str(occ_key))
+
+    print(f"   Finalizado {clase_v1}: {total}/{meta}")
+    return "completa"
+
+
+def descargar(especies, max_seconds=None):
     keys_existentes = cargar_manifiesto()
     manifiesto_f, manifiesto_writer = abrir_manifiesto_para_escritura()
+    manifiesto_lock = threading.Lock()
+
+    deadline = time.monotonic() + max_seconds if max_seconds else None
+    grupos = agrupar_por_clase_v1(especies)
 
     try:
-        for row in especies:
-            sci_name = row["scientific_name"]
-            taxon_key = row["usage_key"]
-            riesgo = row["riesgo"]
-            meta = meta_para(riesgo)
-
-            if not taxon_key:
-                print(f">> {sci_name}: SIN usage_key, se omite")
-                continue
-
-            folder = folder_for(row)
-            os.makedirs(folder, exist_ok=True)
-            descargadas = contar_imagenes_disco(folder)
-
-            if descargadas >= meta:
-                print(f">> {sci_name}: meta ya cubierta ({descargadas}/{meta})")
-                continue
-
-            print(f"\n>> {sci_name} (taxonKey={taxon_key}, meta={meta}, ya tiene {descargadas})")
-
-            offset = 0
-            while descargadas < meta:
-                data = buscar_pagina(taxon_key, offset)
-                results = data.get("results", [])
-                if not results:
+        with ThreadPoolExecutor(max_workers=MAX_WORKERS) as executor:
+            for clase_v1, miembros in grupos.items():
+                if deadline is not None and time.monotonic() >= deadline:
+                    print(f"\n[TIEMPO AGOTADO] tanda terminada antes de llegar a {clase_v1}; "
+                          "se retoma en la próxima corrida")
                     break
-
-                for record in results:
-                    if descargadas >= meta:
-                        break
-
-                    occ_key = record.get("key")
-                    if occ_key is None or str(occ_key) in keys_existentes:
-                        continue
-
-                    media_items = record.get("media") or []
-                    if not media_items:
-                        continue
-
-                    nuevas_de_esta_ocurrencia = 0
-                    for n, media in enumerate(media_items):
-                        url = media.get("identifier")
-                        if not url:
-                            continue
-
-                        resultado = descargar_y_validar(url)
-                        time.sleep(SLEEP_SEC)
-                        if resultado is None:
-                            continue
-                        content, ancho, alto = resultado
-
-                        file_name = f"{occ_key}_{n}.jpg"
-                        file_path = os.path.join(folder, file_name)
-                        with open(file_path, "wb") as f:
-                            f.write(content)
-
-                        license_ = media.get("license") or record.get("license") or ""
-                        rights_holder = media.get("rightsHolder") or record.get("rightsHolder") or ""
-
-                        manifiesto_writer.writerow({
-                            "archivo": file_name,
-                            "especie": sci_name,
-                            "occurrence_key": occ_key,
-                            "url_original": url,
-                            "license": license_,
-                            "rights_holder": rights_holder,
-                            "ancho": ancho,
-                            "alto": alto,
-                        })
-                        manifiesto_f.flush()
-
-                        nuevas_de_esta_ocurrencia += 1
-                        descargadas += 1
-                        print(f"   [OK] {file_name} ({descargadas}/{meta})")
-
-                    if nuevas_de_esta_ocurrencia > 0:
-                        keys_existentes.add(str(occ_key))
-
-                if data.get("endOfRecords"):
-                    break
-                offset += len(results)
-
-            print(f"   Finalizado {sci_name}: {descargadas}/{meta}")
+                descargar_clase(clase_v1, miembros, keys_existentes, manifiesto_writer,
+                                 manifiesto_f, manifiesto_lock, executor, deadline)
     finally:
         manifiesto_f.close()
 
@@ -285,6 +365,10 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--dry-run", action="store_true",
                          help="Reporta disponibilidad por especie sin descargar nada.")
+    parser.add_argument("--max-seconds", type=float, default=None,
+                         help="Corta la corrida limpiamente tras N segundos (para tandas "
+                              "reanudables); lo descargado hasta ese punto queda en disco "
+                              "y en el manifiesto, la siguiente corrida retoma solo.")
     args = parser.parse_args()
 
     especies = cargar_especies()
@@ -292,7 +376,7 @@ def main():
     if args.dry_run:
         dry_run(especies)
     else:
-        descargar(especies)
+        descargar(especies, max_seconds=args.max_seconds)
 
 
 if __name__ == "__main__":
