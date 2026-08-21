@@ -42,6 +42,23 @@ La salida nunca afirma comestibilidad, solo identificación + confianza + riesgo
 Las etiquetas de toxicidad actuales son BORRADOR pendiente de revisión
 por un botánico. No tratarlas como verdad establecida.
 
+## Herbario vs. observación de campo
+
+PRESERVED_SPECIMEN (pliegos de herbario: planta prensada, seca, sobre
+cartulina con etiqueta) es un dominio visual distinto al de una foto de
+celular en campo. Mezclarlos degrada el modelo: aprende el sustrato, no
+la planta.
+
+Regla: el dataset de entrenamiento usa SOLO observación de campo.
+No relajar el filtro para inflar conteos.
+
+Consecuencia conocida: varias especies (Pinus douglasiana, Tillandsia
+benthamiana, Oxalis hernandezii) tienen presencia en GBIF casi
+exclusivamente vía herbario. Para esas, la ruta es iNaturalist o foto propia.
+
+El conteo de disponibilidad SIEMPRE debe desglosarse por basisOfRecord;
+un total con StillImage no dice nada sobre cuántas son usables.
+
 ## Estado conocido del dataset (auditado)
 
 - Estructura ya aplanada. 2,706 imágenes verificadas, ninguna corrupta
@@ -89,3 +106,38 @@ homogénea y la distinción visual no es viable en foto de celular:
 
 NO colapsar cuando la toxicidad difiere entre especies del mismo género.
 Meta: ~62-65 clases en vez de 80 planas.
+
+## Catálogo extensible (decisión de diseño)
+
+v1 no necesita las 79 especies. Objetivo: demo funcional con las clases
+que tengan material suficiente; el resto entra en versiones posteriores.
+
+- Columna `en_v1` en especies.csv controla qué clases entran al modelo.
+  Entrenamiento e inferencia leen la lista desde ahí, nunca de os.listdir().
+- `clases.json` con mapeo clase→índice EXPLÍCITO y estable. Las clases
+  nuevas se agregan siempre al final; los índices existentes no se mueven.
+- Cada modelo exportado lleva versión + su clases.json asociado.
+- Las especies excluidas de v1 alimentan el set de rechazo (open-set):
+  sirven para calibrar el umbral de confianza.
+
+Flujo de crecimiento: fila en CSV -> descarga -> reentrenar -> exportar
+vN -> reemplazar artefacto. Sin tocar código.
+
+## Contexto académico
+
+Proyecto modular (requisito de titulación, CUCEI-UdeG). Implica:
+
+- Trazabilidad: cada etiqueta de toxicidad necesita fuente citable.
+  Agregar columnas `fuente_toxicidad` y `url_fuente` a especies.csv.
+  Fuentes aceptables: Flora Novo-Galiciana, Biblioteca Digital de la
+  Medicina Tradicional Mexicana (UNAM), fichas CONABIO, literatura
+  toxicológica revisada. NO usar conocimiento del modelo sin referencia.
+- Reproducibilidad: semillas fijas, versiones congeladas
+  (requirements.txt con pins), manifiesto de dataset versionado.
+- Guardar métricas de TODOS los experimentos, no solo del final.
+- Registrar licencia y atribución de cada imagen (CC-BY-NC es común
+  en iNat; relevante si el trabajo se publica).
+- Las limitaciones del sistema se documentan explícitamente, no se ocultan.
+- La interfaz debe incluir aviso: herramienta de apoyo a la
+  identificación, no sustituto de determinación botánica profesional.
+  No debe usarse para decidir consumo de plantas.

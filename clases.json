@@ -1,0 +1,246 @@
+{
+  "_doc": "Mapeo clase->índice para el modelo v1, con la agrupación por género ya aplicada (ver 'Estrategia de clases' en CLAUDE.md). Orden alfabético SOLO para esta primera versión. Los índices son estables una vez publicados: las clases nuevas (siguientes versiones) se agregan siempre al final -- nunca se reordena ni se reasignan los índices existentes. Cada modelo exportado debe llevar su propia versión de este archivo junto con los pesos.",
+  "version": 1,
+  "clases": {
+    "Abies religiosa": {
+      "index": 0,
+      "riesgo": "segura"
+    },
+    "Acacia pennatula": {
+      "index": 1,
+      "riesgo": "segura"
+    },
+    "Adiantum capillus-veneris": {
+      "index": 2,
+      "riesgo": "segura"
+    },
+    "Agave_spp": {
+      "index": 3,
+      "riesgo": "irritante"
+    },
+    "Alnus acuminata": {
+      "index": 4,
+      "riesgo": "segura"
+    },
+    "Arbutus_spp": {
+      "index": 5,
+      "riesgo": "segura"
+    },
+    "Asclepias curassavica": {
+      "index": 6,
+      "riesgo": "toxica"
+    },
+    "Baccharis salicifolia": {
+      "index": 7,
+      "riesgo": "segura"
+    },
+    "Buddleja sessiliflora": {
+      "index": 8,
+      "riesgo": "segura"
+    },
+    "Bursera_spp": {
+      "index": 9,
+      "riesgo": "segura"
+    },
+    "Castilleja tenuiflora": {
+      "index": 10,
+      "riesgo": "segura"
+    },
+    "Ceiba aesculifolia": {
+      "index": 11,
+      "riesgo": "segura"
+    },
+    "Cercocarpus macrophyllus": {
+      "index": 12,
+      "riesgo": "segura"
+    },
+    "Clethra rosei": {
+      "index": 13,
+      "riesgo": "segura"
+    },
+    "Cornus disciflora": {
+      "index": 14,
+      "riesgo": "segura"
+    },
+    "Cosmos bipinnatus": {
+      "index": 15,
+      "riesgo": "segura"
+    },
+    "Crataegus mexicana": {
+      "index": 16,
+      "riesgo": "segura"
+    },
+    "Cucurbita foetidissima": {
+      "index": 17,
+      "riesgo": "toxica"
+    },
+    "Cupressus lusitanica": {
+      "index": 18,
+      "riesgo": "segura"
+    },
+    "Dahlia coccinea": {
+      "index": 19,
+      "riesgo": "segura"
+    },
+    "Datura stramonium": {
+      "index": 20,
+      "riesgo": "toxica"
+    },
+    "Dodonaea viscosa": {
+      "index": 21,
+      "riesgo": "segura"
+    },
+    "Erythrina flabelliformis": {
+      "index": 22,
+      "riesgo": "toxica"
+    },
+    "Euphorbia tanquahuete": {
+      "index": 23,
+      "riesgo": "irritante"
+    },
+    "Ficus insipida": {
+      "index": 24,
+      "riesgo": "segura"
+    },
+    "Fraxinus uhdei": {
+      "index": 25,
+      "riesgo": "segura"
+    },
+    "Guazuma ulmifolia": {
+      "index": 26,
+      "riesgo": "segura"
+    },
+    "Ipomoea arborescens": {
+      "index": 27,
+      "riesgo": "segura"
+    },
+    "Jatropha curcas": {
+      "index": 28,
+      "riesgo": "toxica"
+    },
+    "Juniperus flaccida": {
+      "index": 29,
+      "riesgo": "segura"
+    },
+    "Lantana camara": {
+      "index": 30,
+      "riesgo": "toxica"
+    },
+    "Lobelia laxiflora": {
+      "index": 31,
+      "riesgo": "toxica"
+    },
+    "Lysiloma acapulcense": {
+      "index": 32,
+      "riesgo": "segura"
+    },
+    "Mammillaria jaliscana": {
+      "index": 33,
+      "riesgo": "segura"
+    },
+    "Mirabilis jalapa": {
+      "index": 34,
+      "riesgo": "toxica"
+    },
+    "Montanoa tomentosa": {
+      "index": 35,
+      "riesgo": "toxica"
+    },
+    "Nolina parviflora": {
+      "index": 36,
+      "riesgo": "segura"
+    },
+    "Opuntia jaliscana": {
+      "index": 37,
+      "riesgo": "segura"
+    },
+    "Ostrya virginiana": {
+      "index": 38,
+      "riesgo": "segura"
+    },
+    "Passiflora exsudans": {
+      "index": 39,
+      "riesgo": "segura"
+    },
+    "Penstemon roseus": {
+      "index": 40,
+      "riesgo": "segura"
+    },
+    "Phytolacca icosandra": {
+      "index": 41,
+      "riesgo": "toxica"
+    },
+    "Pinus_spp": {
+      "index": 42,
+      "riesgo": "segura"
+    },
+    "Plumeria rubra": {
+      "index": 43,
+      "riesgo": "irritante"
+    },
+    "Prunus serotina": {
+      "index": 44,
+      "riesgo": "toxica"
+    },
+    "Pteridium aquilinum": {
+      "index": 45,
+      "riesgo": "toxica"
+    },
+    "Quercus_spp": {
+      "index": 46,
+      "riesgo": "segura"
+    },
+    "Ricinus communis": {
+      "index": 47,
+      "riesgo": "letal"
+    },
+    "Salix humboldtiana": {
+      "index": 48,
+      "riesgo": "segura"
+    },
+    "Salvia_spp": {
+      "index": 49,
+      "riesgo": "desconocida"
+    },
+    "Sedum jaliscanum": {
+      "index": 50,
+      "riesgo": "segura"
+    },
+    "Selaginella lepidophylla": {
+      "index": 51,
+      "riesgo": "segura"
+    },
+    "Solanum nigrescens": {
+      "index": 52,
+      "riesgo": "toxica"
+    },
+    "Solanum rostratum": {
+      "index": 53,
+      "riesgo": "toxica"
+    },
+    "Symphoricarpos microphyllus": {
+      "index": 54,
+      "riesgo": "toxica"
+    },
+    "Tagetes lucida": {
+      "index": 55,
+      "riesgo": "segura"
+    },
+    "Taxodium mucronatum": {
+      "index": 56,
+      "riesgo": "segura"
+    },
+    "Tillandsia recurvata": {
+      "index": 57,
+      "riesgo": "segura"
+    },
+    "Wigandia urens": {
+      "index": 58,
+      "riesgo": "irritante"
+    },
+    "Zinnia peruviana": {
+      "index": 59,
+      "riesgo": "segura"
+    }
+  }
+}
