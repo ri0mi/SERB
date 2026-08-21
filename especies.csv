@@ -1,0 +1,81 @@
+scientific_name,usage_key,accepted_name,rank,match_type,common_name,riesgo,parte_afectada,endemica,estatus,bloque,n_imagenes_actuales,fuente_toxicidad,url_fuente,descripcion,notas
+Pinus oocarpa,5285220,Pinus oocarpa,SPECIES,EXACT,Ocote,segura,,no,,1,50,,,,
+Pinus douglasiana,5285196,Pinus douglasiana,SPECIES,EXACT,Pino blanco,segura,,no,,1,19,,,,
+Pinus devoniana,5285019,Pinus devoniana,SPECIES,EXACT,Pino lacio,segura,,no,,1,50,,,,
+Pinus lumholtzii,5285228,Pinus lumholtzii,SPECIES,EXACT,Pino triste,segura,,no,,1,48,,,,
+Abies religiosa,2685527,Abies religiosa,SPECIES,EXACT,Oyamel,segura,,no,,1,44,,,,
+Cupressus lusitanica,2684046,Cupressus lusitanica,SPECIES,EXACT,Cedro blanco,segura,,no,,1,19,,,,
+Juniperus flaccida,2684549,Juniperus flaccida,SPECIES,EXACT,Enebro,segura,,no,,1,38,,,,
+Arbutus xalapensis,2882799,Arbutus xalapensis,SPECIES,EXACT,Madroño - corteza roja,segura,,no,,1,50,,,,
+Arbutus tessellata,4170042,Arbutus tessellata,SPECIES,EXACT,Madroño erizado,segura,,no,,1,50,,,,
+Clethra rosei,3718174,Clethra rosei,SPECIES,EXACT,Canelo,segura,,no,,1,15,,,,"script_data_rcimg.py trae 'No especificada' (placeholder de script de recuperación, no es un dato real); se usa el valor de especies.txt."
+Cleyera integrifolia,7360686,Cleyera integrifolia,SPECIES,EXACT,Palo colorado,segura,,no,,1,18,,,,"script_data_rcimg.py trae 'No especificada' (placeholder, no es un dato real); se usa el valor de especies.txt."
+Cornus disciflora,7322007,Cornus disciflora,SPECIES,EXACT,Aceitunillo,segura,,no,,1,18,,,,"script_data_rcimg.py trae 'No especificada' (placeholder, no es un dato real); se usa el valor de especies.txt."
+Prunus serotina,3021850,Prunus serotina,SPECIES,EXACT,Capulín,desconocida,,no,,1,15,,,,"CONFLICTO: especies.txt dice 'Segura', script_data_rcimg.py dice 'Toxica'. Ya señalado en CLAUDE.md. No se resuelve aquí, pendiente de fuente citable."
+Alnus acuminata,2876131,Alnus acuminata,SPECIES,EXACT,Aile / Abedul,segura,,no,,1,15,,,,
+Fraxinus uhdei,3172371,Fraxinus uhdei,SPECIES,EXACT,Fresno,segura,,no,,1,15,,,,"especies.txt tiene el nombre mal escrito como 'Fraxinus udhei' (typo, carpeta vacía ya eliminada); la ortografía correcta 'uhdei' aparece en script_data_rcimg.py y coincide con la carpeta en disco."
+Magnolia pugana,3153769,Magnolia pugana,SPECIES,EXACT,Magnolia de Zapopan,segura,,si,,1,15,,,,especies.txt la marca explícitamente como 'Segura/Endémica'.
+Salix humboldtiana,5372914,Salix humboldtiana,SPECIES,EXACT,Sauce llorón nativo,segura,,no,,1,35,,,,
+Taxodium mucronatum,2684192,Taxodium mucronatum,SPECIES,EXACT,Ahuehuete,segura,,no,,1,50,,,,
+Ostrya virginiana,5332289,Ostrya virginiana,SPECIES,EXACT,Guayabillo,segura,,no,,1,5,,,,"Solo 5 imágenes: según CLAUDE.md es por el filtro stateProvince=Jalisco (la especie es común en Norteamérica), no escasez real."
+Ilex toluccana,7315705,Ilex discolor,SPECIES,FUZZY,Acebo,toxica,frutos,no,,1,0,,,,"Sin carpeta en disco (n_imagenes_actuales=0), incluida por instrucción explícita. especies.txt: 'Frutos tóxicos'. REVISAR_GBIF: accepted_name difiere ('Ilex discolor'); match_type=FUZZY"
+Quercus magnoliifolia,2879847,Quercus magnoliifolia,SPECIES,EXACT,Encino de hoja grande,segura,,no,,2,13,,,,
+Quercus resinosa,2879646,Quercus resinosa,SPECIES,EXACT,Encino roble,segura,,no,,2,50,,,,
+Quercus castanea,2879127,Quercus castanea,SPECIES,EXACT,Encino castaño,segura,,no,,2,18,,,,
+Quercus laeta,2879073,Quercus laeta,SPECIES,EXACT,Encino blanco,segura,,no,,2,18,,,,
+Quercus rugosa,8386328,Quercus rugosa,SPECIES,EXACT,Encino quiebra-hacha,segura,,no,,2,16,,,,
+Quercus viminea,2879637,Quercus viminea,SPECIES,EXACT,Encino sauce,segura,,no,,2,25,,,,
+Quercus salicifolia,2878952,Quercus salicifolia,SPECIES,EXACT,Encino chilillo,segura,,no,,2,16,,,,
+Ficus insipida,6358534,Ficus insipida,SPECIES,EXACT,Amate blanco,segura,,no,,2,49,,,,
+Buddleja sessiliflora,3173335,Buddleja sessiliflora,SPECIES,EXACT,Tepozán,segura,,no,,2,50,,,,
+Ipomoea arborescens,7324166,Ipomoea arborescens,SPECIES,EXACT,Cazahuate / Palo bobo,segura,,no,,2,11,,,,
+Lysiloma acapulcense,2965803,Lysiloma acapulcense,SPECIES,EXACT,Tepehuaje,segura,,no,,2,50,,,,
+Acacia pennatula,2980053,Vachellia pennatula,SPECIES,EXACT,Huizache,segura,,no,,2,50,,,,REVISAR_GBIF: accepted_name difiere ('Vachellia pennatula')
+Bursera fagaroides,3190449,Bursera fagaroides,SPECIES,EXACT,Copal blanco,segura,,no,,2,50,,,,
+Bursera bipinnata,7286788,Bursera bipinnata,SPECIES,EXACT,Copal chino,segura,,no,,2,50,,,,
+Crataegus mexicana,3014233,Crataegus mexicana,SPECIES,EXACT,Tejocote,segura,,no,,2,29,,,,
+Symphoricarpos microphyllus,2888629,Symphoricarpos microphyllus,SPECIES,EXACT,Perlas de la Virgen,toxica,frutos,no,,2,17,,,,"especies.txt: 'Frutos eméticos' (provocan vómito al ingerirse, se clasifica como toxica). script_data_rcimg.py trae 'No especificada' (placeholder, no es un dato real)."
+Cercocarpus macrophyllus,8103256,Cercocarpus macrophyllus,SPECIES,EXACT,Ramón,segura,,no,,2,19,,,,"script_data_rcimg.py trae 'No especificada' (placeholder, no es un dato real); se usa el valor de especies.txt."
+Erythrina flabelliformis,5349516,Erythrina flabelliformis,SPECIES,EXACT,Colorín,toxica,semillas,no,,2,6,,,,Prioridad de recolección per CLAUDE.md (solo 6 imágenes).
+Ceiba aesculifolia,5406696,Ceiba aesculifolia,SPECIES,EXACT,Pochote,segura,,no,,2,50,,,,
+Guazuma ulmifolia,3152195,Guazuma ulmifolia,SPECIES,EXACT,Guácima,segura,,no,,2,50,,,,
+Lantana camara,2925303,Lantana camara,SPECIES,EXACT,Cinco negritos,toxica,,no,,3,50,,,,
+Asclepias curassavica,3170241,Asclepias curassavica,SPECIES,EXACT,Venenillo,toxica,,no,,3,50,,,,
+Wigandia urens,2928366,Wigandia urens,SPECIES,EXACT,Ortiga de tierra caliente,irritante,,no,,3,50,,,,
+Solanum nigrescens,2930275,Solanum nigrescens,SPECIES,EXACT,Hierba mora,toxica,,no,,3,15,,,,Coincide entre script_data.py y script_data_rcimg.py.
+Solanum rostratum,2930922,Solanum angustifolium,SPECIES,EXACT,Duraznillo,toxica,,no,,3,50,,,,"script_data.py: 'Tóxica/Espinosa' (espinoso es daño físico, no contradice la toxicidad). REVISAR_GBIF: accepted_name difiere ('Solanum angustifolium')"
+Ricinus communis,5380041,Ricinus communis,SPECIES,EXACT,Higuerilla,letal,semillas,no,,3,50,,,,
+Jatropha curcas,3072953,Jatropha curcas,SPECIES,EXACT,Piñón mexicano,toxica,,no,,3,9,,,,"Prioridad máxima de recolección per CLAUDE.md (intoxicaciones pediátricas frecuentes en México, solo 9 imágenes)."
+Phytolacca icosandra,3084023,Phytolacca icosandra,SPECIES,EXACT,Congueranza,toxica,,no,,3,50,,,,
+Euphorbia tanquahuete,3066016,Euphorbia tanquahuete,SPECIES,EXACT,Pegahueso,desconocida,,no,,3,49,,,,"script_data.py trae la etiqueta ambigua 'No especificada/Segura' (la propia fuente no está segura); no se resuelve, pendiente de fuente citable."
+Plumeria rubra,3169674,Plumeria rubra,SPECIES,EXACT,Cacaloxóchitl,desconocida,,no,,3,50,,,,"script_data.py trae la etiqueta ambigua 'No especificada/Segura'; no se resuelve, pendiente de fuente citable."
+Salvia mexicana,8104661,Salvia mexicana,SPECIES,EXACT,Salvia de México,desconocida,,no,,3,50,,,,"script_data.py trae la etiqueta ambigua 'No especificada/Segura'; no se resuelve, pendiente de fuente citable."
+Salvia lavanduloides,7308690,Salvia lavanduloides,SPECIES,EXACT,Salvia cimarrona,desconocida,,no,,3,50,,,,"script_data.py trae la etiqueta ambigua 'No especificada/Segura'; no se resuelve, pendiente de fuente citable."
+Tagetes lucida,3088537,Tagetes lucida,SPECIES,EXACT,Pericón,segura,,no,,3,50,,,,"script_data.py: 'Medicinal/Segura' (ambos calificativos apuntan a lo mismo, no hay contradicción)."
+Dahlia coccinea,5387098,Dahlia coccinea,SPECIES,EXACT,Dalia roja,segura,,no,,3,50,,,,
+Cosmos bipinnatus,3098912,Cosmos bipinnatus,SPECIES,EXACT,Cosmos / Mirasol,segura,,no,,3,50,,,,
+Zinnia peruviana,9193953,Zinnia peruviana,SPECIES,EXACT,Mal de ojo,segura,,no,,3,50,,,,
+Montanoa tomentosa,5406080,Montanoa tomentosa,SPECIES,EXACT,Zoapatle,desconocida,,no,,3,11,,,,"script_data.py solo dice 'Medicinal', sin calificativo de seguridad explícito (uso medicinal no implica ausencia de riesgo); prioridad de recolección per CLAUDE.md (solo 11 imágenes)."
+Baccharis salicifolia,3129643,Baccharis salicifolia,SPECIES,EXACT,Jara,segura,,no,,3,49,,,,
+Dodonaea viscosa,5421144,Dodonaea viscosa,SPECIES,EXACT,Jarilla,segura,,no,,3,37,,,,
+Datura stramonium,2928751,Datura stramonium,SPECIES,EXACT,,desconocida,,no,,3,50,,,,"No aparece en especies.txt, script_data.py ni script_data_rcimg.py -- solo existe la carpeta en disco (sin nombre común ni etiqueta de toxicidad en ninguna fuente del proyecto). Incluida por instrucción explícita. Sin dato = desconocida; NO se usa conocimiento del modelo sin referencia citable (ver CLAUDE.md), pendiente de investigación con fuente."
+Agave guadalajarana,2767132,Agave guadalajarana,SPECIES,EXACT,Maguey de Guadalajara,irritante,savia,si,,4,50,,,,"especies.txt dice 'Segura/Endémico'. CLAUDE.md ordena explícitamente NO dejarla como segura: 'ambas especies [de Agave] deben quedar como irritante. La savia de Agave tiene saponinas y oxalatos; marcar guadalajarana como segura es un error.' Se sigue esa instrucción del proyecto, no es una resolución propia de conflicto entre fuentes. Además: 50 imágenes exactas, CLAUDE.md sospecha posible contaminación de otros taxones del género -- pendiente de verificación."
+Agave inaequidens,2766643,Agave inaequidens,SPECIES,EXACT,Maguey bruto,irritante,savia,no,,4,50,,,,
+Mammillaria jaliscana,7279782,Mammillaria jaliscana,SPECIES,EXACT,Biznaga de Jalisco,segura,,si,,4,50,,,,CLAUDE.md la lista entre los endemismos con 50 imágenes exactas a verificar por posible contaminación del género en la consulta a GBIF.
+Opuntia jaliscana,5626343,Opuntia jaliscana,SPECIES,EXACT,Nopal silvestre,segura,,desconocida,,4,23,,,,El epíteto 'jaliscana' sugiere endemismo pero ninguna fuente del proyecto lo confirma explícitamente; pendiente de revisión.
+Nolina parviflora,2776994,Nolina parviflora,SPECIES,EXACT,Palmilla,segura,,no,,4,16,,,,
+Tillandsia benthamiana,8318726,Tillandsia benthamiana,SPECIES,EXACT,Heno / Bromelia epífita,segura,,no,,4,12,,,,"CLAUDE.md sospechaba que el nombre no resuelve en GBIF (solo 12 imágenes), pero el match resultó EXACT/ACCEPTED -- la sospecha no se confirma; la escasez de imágenes tiene otra causa."
+Tillandsia recurvata,2695588,Tillandsia recurvata,SPECIES,EXACT,Heno pequeño,segura,,no,,4,50,,,,
+Pteridium aquilinum,5275012,Pteridium aquilinum,SPECIES,EXACT,Helecho pesma,toxica,,no,,4,36,,,,especies.txt: 'Tóxico/Carcinógeno'.
+Adiantum capillus-veneris,2651816,Adiantum capillus-veneris,SPECIES,EXACT,Culantrillo,segura,,no,,4,19,,,,
+Selaginella lepidophylla,2688180,Selaginella lepidophylla,SPECIES,EXACT,Planta de la resurrección,segura,,no,,4,32,,,,
+Lobelia laxiflora,5408996,Lobelia laxiflora,SPECIES,EXACT,Arete de fuego,toxica,,no,,4,50,,,,especies.txt: 'Tóxica/Irritante'; se prioriza la categoría más severa (toxica).
+Penstemon roseus,3730926,Penstemon roseus,SPECIES,EXACT,Campanita,segura,,no,,4,41,,,,
+Castilleja tenuiflora,3170579,Castilleja tenuiflora,SPECIES,EXACT,Hierba del cáncer,segura,,no,,4,50,,,,
+Echeveria jaliscensis,5362052,Echeveria,GENUS,HIGHERRANK,Conchita,segura,,desconocida,,4,0,,,,"0 imágenes pese a búsqueda global previa. GBIF species/match solo resuelve al género 'Echeveria' (rank=GENUS, matchType=HIGHERRANK); el nombre a nivel especie no se encontró, tal como sospechaba CLAUDE.md. Confirmar si es sinónimo o error de nombre antes de seguir intentando descargar. REVISAR_GBIF: rank=GENUS; accepted_name difiere ('Echeveria')"
+Sedum jaliscanum,7334057,Sedum jaliscanum,SPECIES,EXACT,Siempreviva,segura,,si,,4,50,,,,CLAUDE.md la lista entre los endemismos con 50 imágenes exactas a verificar por posible contaminación del género en la consulta a GBIF.
+Passiflora exsudans,3587785,Passiflora exsudans,SPECIES,EXACT,Pasionaria silvestre,segura,,no,,4,12,,,,
+Cucurbita foetidissima,2874521,Cucurbita foetidissima,SPECIES,EXACT,Calabacilla loca,toxica,,no,,4,10,,,,especies.txt: 'Muy amarga/Tóxica'. Prioridad de recolección per CLAUDE.md (solo 10 imágenes).
+Mirabilis jalapa,3086240,Mirabilis jalapa,SPECIES,EXACT,Maravilla,toxica,semillas y raíces,no,,4,50,,,,especies.txt: 'Semillas/Raíces tóxicas'.
+Begonia jaliscana,4158520,Begonia jaliscana,SPECIES,EXACT,Begonia silvestre,segura,,desconocida,,4,10,,,,El epíteto 'jaliscana' sugiere endemismo pero ninguna fuente del proyecto lo confirma explícitamente; pendiente de revisión.
+Oxalis hernandezii,7740649,Oxalis hernandezii,SPECIES,EXACT,Agritos,desconocida,,no,,4,19,,,,"especies.txt trae la etiqueta internamente contradictoria 'Segura/Oxalatos' (los oxalatos suelen ser irritantes); no se resuelve aquí, pendiente de fuente citable."
