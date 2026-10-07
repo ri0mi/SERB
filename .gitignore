@@ -1,5 +1,8 @@
 *.jpg
 *.jpeg
 *.png
+*.pt
+*.pth
+*.onnx
+*.tar.gz
 __pycache__/
-.ipynb_checkpoints/

@@ -1,0 +1,46 @@
+[C_limpio] 55 clases, 4093 imagenes, lr=0.0003 descongelar=3 epocas=25
+train=2929  val=618
+ep  1  train=0.210  val=0.351  (viejo=0.000 nuevo=0.351)  31s
+ep  2  train=0.460  val=0.448  (viejo=0.000 nuevo=0.448)  33s
+ep  3  train=0.562  val=0.476  (viejo=0.000 nuevo=0.476)  34s
+ep  4  train=0.666  val=0.539  (viejo=0.000 nuevo=0.539)  33s
+ep  5  train=0.726  val=0.536  (viejo=0.000 nuevo=0.536)  33s
+ep  6  train=0.772  val=0.534  (viejo=0.000 nuevo=0.534)  36s
+ep  7  train=0.799  val=0.545  (viejo=0.000 nuevo=0.545)  36s
+ep  8  train=0.834  val=0.539  (viejo=0.000 nuevo=0.539)  37s
+ep  9  train=0.853  val=0.553  (viejo=0.000 nuevo=0.553)  36s
+ep 10  train=0.869  val=0.545  (viejo=0.000 nuevo=0.545)  35s
+ep 11  train=0.895  val=0.581  (viejo=0.000 nuevo=0.581)  35s
+ep 12  train=0.902  val=0.576  (viejo=0.000 nuevo=0.576)  35s
+ep 13  train=0.922  val=0.560  (viejo=0.000 nuevo=0.560)  36s
+ep 14  train=0.931  val=0.561  (viejo=0.000 nuevo=0.561)  34s
+ep 15  train=0.936  val=0.557  (viejo=0.000 nuevo=0.557)  36s
+ep 16  train=0.943  val=0.571  (viejo=0.000 nuevo=0.571)  37s
+ep 17  train=0.947  val=0.571  (viejo=0.000 nuevo=0.571)  35s
+ep 18  train=0.943  val=0.565  (viejo=0.000 nuevo=0.565)  36s
+ep 19  train=0.957  val=0.563  (viejo=0.000 nuevo=0.563)  35s
+ep 20  train=0.955  val=0.568  (viejo=0.000 nuevo=0.568)  39s
+ep 21  train=0.955  val=0.565  (viejo=0.000 nuevo=0.565)  35s
+ep 22  train=0.957  val=0.578  (viejo=0.000 nuevo=0.578)  42s
+ep 23  train=0.962  val=0.568  (viejo=0.000 nuevo=0.568)  43s
+ep 24  train=0.956  val=0.571  (viejo=0.000 nuevo=0.571)  40s
+ep 25  train=0.959  val=0.573  (viejo=0.000 nuevo=0.573)  37s
+
+[C_limpio] mejor val acc: 0.581
+
+--- peores clases ---
+  0.00  Dahlia coccinea                n=  1  -> Ipomoea arborescens(1)
+  0.17  Baccharis salicifolia          n=  6  -> Montanoa tomentosa(1), Datura stramonium(1), Dodonaea viscosa(1)
+  0.17  Cornus disciflora              n= 12  -> Jatropha curcas(3), Ficus insipida(2)
+  0.19  Ostrya virginiana              n= 21  -> Prunus serotina(9), Cucurbita foetidissima(2)
+  0.20  Castilleja tenuiflora          n=  5  -> Erythrina flabelliformis(3), Asclepias curassavica(1)
+  0.20  Guazuma ulmifolia              n=  5  -> Cucurbita foetidissima(1), Crataegus mexicana(1)
+  0.20  Wigandia urens                 n= 20  -> Datura stramonium(4), Jatropha curcas(4)
+  0.25  Crataegus mexicana             n=  4  -> Symphoricarpos microphyllus(1), Passiflora exsudans(1)
+  0.25  Cupressus lusitanica           n=  8  -> Abies religiosa(3), Acacia pennatula(1)
+  0.25  Euphorbia tanquahuete          n= 16  -> Ipomoea arborescens(3), Symphoricarpos microphyllus(2)
+  0.30  Ficus insipida                 n= 10  -> Alnus acuminata(2), Guazuma ulmifolia(2)
+  0.33  Ceiba aesculifolia             n=  3  -> Ipomoea arborescens(1), Prunus serotina(1)
+  0.35  Datura stramonium              n= 17  -> Solanum rostratum(2), Tillandsia recurvata(2)
+  0.36  Alnus acuminata                n= 14  -> Fraxinus uhdei(3), Mammillaria jaliscana(1)
+  0.36  Mirabilis jalapa               n= 25  -> Cupressus lusitanica(2), Alnus acuminata(2)

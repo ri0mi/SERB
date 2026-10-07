@@ -1,0 +1,560 @@
+{
+  "Quercus_spp": {
+    "Ipomoea arborescens": 2,
+    "Crataegus mexicana": 2,
+    "Quercus_spp": 5,
+    "Wigandia urens": 1,
+    "Prunus serotina": 1,
+    "Plumeria rubra": 2,
+    "Dodonaea viscosa": 2,
+    "Cercocarpus macrophyllus": 2,
+    "Tillandsia recurvata": 1,
+    "Mirabilis jalapa": 1,
+    "Ostrya virginiana": 1,
+    "Agave_spp": 1,
+    "Arbutus_spp": 1
+  },
+  "Ficus insipida": {
+    "Passiflora exsudans": 1,
+    "Quercus_spp": 1,
+    "Bursera_spp": 3,
+    "Plumeria rubra": 1,
+    "Ceiba aesculifolia": 1,
+    "Ficus insipida": 8,
+    "Guazuma ulmifolia": 1,
+    "Taxodium mucronatum": 1
+  },
+  "Lysiloma acapulcense": {
+    "Pteridium aquilinum": 2,
+    "Acacia pennatula": 3,
+    "Lysiloma acapulcense": 1,
+    "Euphorbia tanquahuete": 1,
+    "Ficus insipida": 1,
+    "Pinus_spp": 1
+  },
+  "Acacia pennatula": {
+    "Plumeria rubra": 1,
+    "Abies religiosa": 1,
+    "Lysiloma acapulcense": 2,
+    "Acacia pennatula": 3,
+    "Buddleja sessiliflora": 1,
+    "Euphorbia tanquahuete": 3
+  },
+  "Crataegus mexicana": {
+    "Montanoa tomentosa": 1,
+    "Salvia_spp": 2,
+    "Crataegus mexicana": 3,
+    "Pteridium aquilinum": 1,
+    "Prunus serotina": 1
+  },
+  "Ipomoea arborescens": {
+    "Ipomoea arborescens": 7,
+    "Plumeria rubra": 1,
+    "Tillandsia recurvata": 1
+  },
+  "Guazuma ulmifolia": {
+    "Pinus_spp": 1,
+    "Fraxinus uhdei": 1,
+    "Guazuma ulmifolia": 3,
+    "Lantana camara": 1,
+    "Opuntia jaliscana": 1,
+    "Lysiloma acapulcense": 1,
+    "Abies religiosa": 1,
+    "Crataegus mexicana": 1,
+    "Jatropha curcas": 1,
+    "Montanoa tomentosa": 1,
+    "Bursera_spp": 1
+  },
+  "Bursera_spp": {
+    "Acacia pennatula": 1,
+    "Bursera_spp": 3,
+    "Euphorbia tanquahuete": 1,
+    "Pinus_spp": 1,
+    "Plumeria rubra": 1,
+    "Solanum rostratum": 1,
+    "Salvia_spp": 1,
+    "Taxodium mucronatum": 1,
+    "Erythrina flabelliformis": 1,
+    "Ceiba aesculifolia": 2,
+    "Cucurbita foetidissima": 1,
+    "Cupressus lusitanica": 1
+  },
+  "Ceiba aesculifolia": {
+    "Ipomoea arborescens": 3,
+    "Plumeria rubra": 2,
+    "Ceiba aesculifolia": 3,
+    "Lysiloma acapulcense": 1,
+    "Tillandsia recurvata": 1,
+    "Acacia pennatula": 1
+  },
+  "Buddleja sessiliflora": {
+    "Buddleja sessiliflora": 8,
+    "Solanum rostratum": 1,
+    "Plumeria rubra": 1,
+    "Acacia pennatula": 1,
+    "Tillandsia recurvata": 1,
+    "Fraxinus uhdei": 1
+  },
+  "Erythrina flabelliformis": {
+    "Lobelia laxiflora": 2,
+    "Erythrina flabelliformis": 21,
+    "Agave_spp": 1,
+    "Dodonaea viscosa": 1
+  },
+  "Symphoricarpos microphyllus": {
+    "Symphoricarpos microphyllus": 13,
+    "Mirabilis jalapa": 1,
+    "Cupressus lusitanica": 1,
+    "Adiantum capillus-veneris": 3,
+    "Solanum nigrescens": 2,
+    "Cercocarpus macrophyllus": 1,
+    "Lantana camara": 1,
+    "Montanoa tomentosa": 1,
+    "Selaginella lepidophylla": 1,
+    "Cornus disciflora": 1
+  },
+  "Cercocarpus macrophyllus": {
+    "Cercocarpus macrophyllus": 12,
+    "Bursera_spp": 1,
+    "Nolina parviflora": 1,
+    "Fraxinus uhdei": 1,
+    "Ficus insipida": 1
+  },
+  "Lobelia laxiflora": {
+    "Lobelia laxiflora": 21,
+    "Lantana camara": 1,
+    "Phytolacca icosandra": 1,
+    "Baccharis salicifolia": 1,
+    "Prunus serotina": 1
+  },
+  "Cucurbita foetidissima": {
+    "Cucurbita foetidissima": 18,
+    "Alnus acuminata": 2,
+    "Ficus insipida": 1,
+    "Cercocarpus macrophyllus": 1,
+    "Solanum rostratum": 1
+  },
+  "Mammillaria jaliscana": {
+    "Mammillaria jaliscana": 14
+  },
+  "Selaginella lepidophylla": {
+    "Selaginella lepidophylla": 11,
+    "Tillandsia recurvata": 3,
+    "Abies religiosa": 1,
+    "Bursera_spp": 1,
+    "Mammillaria jaliscana": 1
+  },
+  "Penstemon roseus": {
+    "Penstemon roseus": 9,
+    "Lobelia laxiflora": 3
+  },
+  "Opuntia jaliscana": {
+    "Opuntia jaliscana": 5,
+    "Plumeria rubra": 1,
+    "Cucurbita foetidissima": 1,
+    "Bursera_spp": 1,
+    "Tillandsia recurvata": 1
+  },
+  "Mirabilis jalapa": {
+    "Lobelia laxiflora": 2,
+    "Cucurbita foetidissima": 2,
+    "Cupressus lusitanica": 2,
+    "Alnus acuminata": 2,
+    "Datura stramonium": 2,
+    "Mirabilis jalapa": 8,
+    "Jatropha curcas": 1,
+    "Juniperus flaccida": 1,
+    "Dodonaea viscosa": 2,
+    "Adiantum capillus-veneris": 2,
+    "Sedum jaliscanum": 2,
+    "Zinnia peruviana": 1,
+    "Lantana camara": 2,
+    "Phytolacca icosandra": 1,
+    "Quercus_spp": 1
+  },
+  "Agave_spp": {
+    "Agave_spp": 20,
+    "Prunus serotina": 1,
+    "Baccharis salicifolia": 1,
+    "Salvia_spp": 1
+  },
+  "Passiflora exsudans": {
+    "Passiflora exsudans": 5,
+    "Jatropha curcas": 1,
+    "Lantana camara": 1,
+    "Cercocarpus macrophyllus": 1
+  },
+  "Nolina parviflora": {
+    "Nolina parviflora": 11,
+    "Pteridium aquilinum": 1,
+    "Pinus_spp": 1
+  },
+  "Pteridium aquilinum": {
+    "Pteridium aquilinum": 18,
+    "Acacia pennatula": 1,
+    "Taxodium mucronatum": 1,
+    "Solanum rostratum": 1
+  },
+  "Adiantum capillus-veneris": {
+    "Adiantum capillus-veneris": 9,
+    "Datura stramonium": 1,
+    "Mammillaria jaliscana": 1,
+    "Sedum jaliscanum": 1
+  },
+  "Castilleja tenuiflora": {
+    "Castilleja tenuiflora": 4,
+    "Erythrina flabelliformis": 2,
+    "Jatropha curcas": 1,
+    "Cucurbita foetidissima": 1,
+    "Pteridium aquilinum": 1,
+    "Lobelia laxiflora": 3
+  },
+  "Sedum jaliscanum": {
+    "Sedum jaliscanum": 6,
+    "Montanoa tomentosa": 2,
+    "Adiantum capillus-veneris": 2,
+    "Wigandia urens": 1,
+    "Lobelia laxiflora": 1
+  },
+  "Tillandsia recurvata": {
+    "Tillandsia recurvata": 7,
+    "Pteridium aquilinum": 1,
+    "Ipomoea arborescens": 1,
+    "Cosmos bipinnatus": 1,
+    "Lobelia laxiflora": 1,
+    "Ostrya virginiana": 1,
+    "Fraxinus uhdei": 1
+  },
+  "Wigandia urens": {
+    "Wigandia urens": 10,
+    "Salvia_spp": 2,
+    "Ricinus communis": 1,
+    "Agave_spp": 1,
+    "Jatropha curcas": 2,
+    "Alnus acuminata": 1,
+    "Mirabilis jalapa": 1,
+    "Crataegus mexicana": 1,
+    "Adiantum capillus-veneris": 1,
+    "Pinus_spp": 1,
+    "Fraxinus uhdei": 1,
+    "Cucurbita foetidissima": 1,
+    "Quercus_spp": 1,
+    "Lantana camara": 1
+  },
+  "Jatropha curcas": {
+    "Jatropha curcas": 16,
+    "Plumeria rubra": 1,
+    "Montanoa tomentosa": 1,
+    "Adiantum capillus-veneris": 1,
+    "Lantana camara": 1,
+    "Euphorbia tanquahuete": 1,
+    "Solanum nigrescens": 1,
+    "Crataegus mexicana": 1
+  },
+  "Baccharis salicifolia": {
+    "Baccharis salicifolia": 5,
+    "Lantana camara": 2,
+    "Montanoa tomentosa": 1,
+    "Euphorbia tanquahuete": 1,
+    "Prunus serotina": 1,
+    "Dodonaea viscosa": 1,
+    "Buddleja sessiliflora": 1,
+    "Pteridium aquilinum": 1
+  },
+  "Ricinus communis": {
+    "Ricinus communis": 7,
+    "Cupressus lusitanica": 1,
+    "Plumeria rubra": 1,
+    "Jatropha curcas": 1,
+    "Pteridium aquilinum": 1,
+    "Prunus serotina": 2,
+    "Euphorbia tanquahuete": 1,
+    "Lantana camara": 1,
+    "Penstemon roseus": 1,
+    "Acacia pennatula": 1,
+    "Phytolacca icosandra": 1
+  },
+  "Dahlia coccinea": {
+    "Penstemon roseus": 2,
+    "Dahlia coccinea": 4,
+    "Ipomoea arborescens": 1,
+    "Lantana camara": 2,
+    "Baccharis salicifolia": 1
+  },
+  "Plumeria rubra": {
+    "Plumeria rubra": 8,
+    "Baccharis salicifolia": 1,
+    "Crataegus mexicana": 1,
+    "Dahlia coccinea": 1,
+    "Mirabilis jalapa": 1,
+    "Dodonaea viscosa": 1,
+    "Tillandsia recurvata": 2,
+    "Salix humboldtiana": 1,
+    "Salvia_spp": 1,
+    "Ceiba aesculifolia": 1,
+    "Cucurbita foetidissima": 1,
+    "Ipomoea arborescens": 1
+  },
+  "Lantana camara": {
+    "Salvia_spp": 1,
+    "Plumeria rubra": 1,
+    "Lantana camara": 11,
+    "Tagetes lucida": 2,
+    "Ficus insipida": 1,
+    "Montanoa tomentosa": 1,
+    "Mirabilis jalapa": 1,
+    "Passiflora exsudans": 2,
+    "Crataegus mexicana": 1
+  },
+  "Salvia_spp": {
+    "Pinus_spp": 1,
+    "Salvia_spp": 10,
+    "Abies religiosa": 1,
+    "Adiantum capillus-veneris": 1,
+    "Penstemon roseus": 1,
+    "Solanum nigrescens": 1
+  },
+  "Cosmos bipinnatus": {
+    "Cosmos bipinnatus": 10,
+    "Taxodium mucronatum": 1,
+    "Penstemon roseus": 1,
+    "Plumeria rubra": 1,
+    "Symphoricarpos microphyllus": 1,
+    "Salvia_spp": 1
+  },
+  "Solanum rostratum": {
+    "Solanum rostratum": 22,
+    "Tagetes lucida": 1,
+    "Cucurbita foetidissima": 1,
+    "Passiflora exsudans": 1
+  },
+  "Asclepias curassavica": {
+    "Asclepias curassavica": 13,
+    "Lobelia laxiflora": 3,
+    "Lantana camara": 1,
+    "Zinnia peruviana": 1,
+    "Cornus disciflora": 1,
+    "Ficus insipida": 1,
+    "Montanoa tomentosa": 1
+  },
+  "Datura stramonium": {
+    "Asclepias curassavica": 1,
+    "Cucurbita foetidissima": 2,
+    "Datura stramonium": 8,
+    "Baccharis salicifolia": 1,
+    "Solanum rostratum": 2,
+    "Jatropha curcas": 3,
+    "Bursera_spp": 1,
+    "Buddleja sessiliflora": 1,
+    "Abies religiosa": 1,
+    "Agave_spp": 1,
+    "Ceiba aesculifolia": 1,
+    "Lantana camara": 1,
+    "Mirabilis jalapa": 1,
+    "Mammillaria jaliscana": 1
+  },
+  "Tagetes lucida": {
+    "Tagetes lucida": 7,
+    "Solanum rostratum": 2,
+    "Lantana camara": 2,
+    "Passiflora exsudans": 1,
+    "Crataegus mexicana": 1
+  },
+  "Dodonaea viscosa": {
+    "Ipomoea arborescens": 2,
+    "Juniperus flaccida": 1,
+    "Crataegus mexicana": 1,
+    "Dodonaea viscosa": 1,
+    "Cucurbita foetidissima": 1,
+    "Mirabilis jalapa": 1,
+    "Ceiba aesculifolia": 1,
+    "Baccharis salicifolia": 1
+  },
+  "Solanum nigrescens": {
+    "Solanum nigrescens": 11,
+    "Lantana camara": 1,
+    "Mirabilis jalapa": 1,
+    "Bursera_spp": 1,
+    "Cucurbita foetidissima": 1,
+    "Montanoa tomentosa": 1,
+    "Passiflora exsudans": 1,
+    "Jatropha curcas": 1,
+    "Prunus serotina": 1
+  },
+  "Montanoa tomentosa": {
+    "Salvia_spp": 1,
+    "Lantana camara": 1,
+    "Montanoa tomentosa": 16,
+    "Adiantum capillus-veneris": 1,
+    "Fraxinus uhdei": 1,
+    "Crataegus mexicana": 7,
+    "Buddleja sessiliflora": 4,
+    "Cucurbita foetidissima": 1,
+    "Selaginella lepidophylla": 1,
+    "Jatropha curcas": 1,
+    "Datura stramonium": 1,
+    "Symphoricarpos microphyllus": 2
+  },
+  "Phytolacca icosandra": {
+    "Phytolacca icosandra": 13,
+    "Ficus insipida": 2,
+    "Cercocarpus macrophyllus": 2,
+    "Buddleja sessiliflora": 1,
+    "Symphoricarpos microphyllus": 1,
+    "Lobelia laxiflora": 1,
+    "Salvia_spp": 2,
+    "Cucurbita foetidissima": 1,
+    "Prunus serotina": 1,
+    "Pinus_spp": 1,
+    "Bursera_spp": 1,
+    "Datura stramonium": 1
+  },
+  "Zinnia peruviana": {
+    "Cosmos bipinnatus": 1,
+    "Zinnia peruviana": 5,
+    "Lobelia laxiflora": 1,
+    "Dahlia coccinea": 2,
+    "Penstemon roseus": 1,
+    "Mirabilis jalapa": 1
+  },
+  "Euphorbia tanquahuete": {
+    "Euphorbia tanquahuete": 9,
+    "Tillandsia recurvata": 1,
+    "Clethra rosei": 1,
+    "Acacia pennatula": 1,
+    "Penstemon roseus": 1,
+    "Tagetes lucida": 1,
+    "Bursera_spp": 3,
+    "Quercus_spp": 1,
+    "Plumeria rubra": 1,
+    "Baccharis salicifolia": 1,
+    "Prunus serotina": 1,
+    "Cucurbita foetidissima": 2,
+    "Salix humboldtiana": 1
+  },
+  "Alnus acuminata": {
+    "Buddleja sessiliflora": 1,
+    "Lysiloma acapulcense": 1,
+    "Lantana camara": 1,
+    "Cucurbita foetidissima": 1,
+    "Alnus acuminata": 5,
+    "Fraxinus uhdei": 2,
+    "Ficus insipida": 1,
+    "Quercus_spp": 1,
+    "Jatropha curcas": 1,
+    "Pinus_spp": 1
+  },
+  "Arbutus_spp": {
+    "Quercus_spp": 1,
+    "Cornus disciflora": 3,
+    "Arbutus_spp": 2,
+    "Taxodium mucronatum": 1,
+    "Ricinus communis": 1,
+    "Bursera_spp": 2,
+    "Clethra rosei": 1,
+    "Plumeria rubra": 1,
+    "Pinus_spp": 1,
+    "Dodonaea viscosa": 1,
+    "Phytolacca icosandra": 1
+  },
+  "Abies religiosa": {
+    "Abies religiosa": 7,
+    "Symphoricarpos microphyllus": 1,
+    "Quercus_spp": 1,
+    "Euphorbia tanquahuete": 1,
+    "Cupressus lusitanica": 1
+  },
+  "Clethra rosei": {
+    "Alnus acuminata": 1,
+    "Clethra rosei": 5,
+    "Jatropha curcas": 1
+  },
+  "Pinus_spp": {
+    "Pinus_spp": 16,
+    "Abies religiosa": 2,
+    "Quercus_spp": 1,
+    "Lysiloma acapulcense": 1,
+    "Tillandsia recurvata": 1,
+    "Pteridium aquilinum": 1,
+    "Mammillaria jaliscana": 1,
+    "Ceiba aesculifolia": 1,
+    "Nolina parviflora": 1
+  },
+  "Prunus serotina": {
+    "Prunus serotina": 15,
+    "Selaginella lepidophylla": 1,
+    "Tillandsia recurvata": 1,
+    "Ipomoea arborescens": 1,
+    "Ricinus communis": 1,
+    "Phytolacca icosandra": 1,
+    "Fraxinus uhdei": 1,
+    "Buddleja sessiliflora": 1
+  },
+  "Cornus disciflora": {
+    "Passiflora exsudans": 1,
+    "Cornus disciflora": 5,
+    "Alnus acuminata": 1,
+    "Buddleja sessiliflora": 1,
+    "Bursera_spp": 1,
+    "Ceiba aesculifolia": 1,
+    "Crataegus mexicana": 1,
+    "Quercus_spp": 1,
+    "Euphorbia tanquahuete": 1
+  },
+  "Taxodium mucronatum": {
+    "Bursera_spp": 1,
+    "Lysiloma acapulcense": 2,
+    "Abies religiosa": 1,
+    "Juniperus flaccida": 2,
+    "Datura stramonium": 1,
+    "Salix humboldtiana": 1,
+    "Taxodium mucronatum": 1,
+    "Penstemon roseus": 1
+  },
+  "Salix humboldtiana": {
+    "Taxodium mucronatum": 2,
+    "Pinus_spp": 1,
+    "Baccharis salicifolia": 1,
+    "Dodonaea viscosa": 1,
+    "Salix humboldtiana": 2,
+    "Lobelia laxiflora": 1,
+    "Ipomoea arborescens": 1,
+    "Datura stramonium": 1
+  },
+  "Ostrya virginiana": {
+    "Juniperus flaccida": 1,
+    "Ostrya virginiana": 5,
+    "Cucurbita foetidissima": 2,
+    "Bursera_spp": 1,
+    "Prunus serotina": 5,
+    "Euphorbia tanquahuete": 4,
+    "Montanoa tomentosa": 1,
+    "Ipomoea arborescens": 1,
+    "Solanum rostratum": 1
+  },
+  "Cupressus lusitanica": {
+    "Salix humboldtiana": 1,
+    "Taxodium mucronatum": 2,
+    "Abies religiosa": 4,
+    "Juniperus flaccida": 1,
+    "Mammillaria jaliscana": 1,
+    "Cupressus lusitanica": 1
+  },
+  "Fraxinus uhdei": {
+    "Jatropha curcas": 1,
+    "Bursera_spp": 3,
+    "Baccharis salicifolia": 1,
+    "Cucurbita foetidissima": 1,
+    "Quercus_spp": 1,
+    "Dodonaea viscosa": 2,
+    "Fraxinus uhdei": 7,
+    "Salix humboldtiana": 1,
+    "Prunus serotina": 2,
+    "Ceiba aesculifolia": 1,
+    "Taxodium mucronatum": 1
+  },
+  "Juniperus flaccida": {
+    "Juniperus flaccida": 8,
+    "Cupressus lusitanica": 1
+  }
+}

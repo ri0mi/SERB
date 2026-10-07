@@ -1,0 +1,46 @@
+[B_finetune] 60 clases, 6721 imagenes, lr=0.0003 descongelar=3 epocas=25
+train=4747  val=999
+ep  1  train=0.211  val=0.365  (viejo=0.328 nuevo=0.388)  49s
+ep  2  train=0.461  val=0.467  (viejo=0.454 nuevo=0.476)  53s
+ep  3  train=0.555  val=0.522  (viejo=0.528 nuevo=0.518)  51s
+ep  4  train=0.628  val=0.537  (viejo=0.517 nuevo=0.549)  50s
+ep  5  train=0.675  val=0.558  (viejo=0.556 nuevo=0.558)  48s
+ep  6  train=0.719  val=0.563  (viejo=0.588 nuevo=0.547)  51s
+ep  7  train=0.757  val=0.583  (viejo=0.593 nuevo=0.576)  50s
+ep  8  train=0.787  val=0.582  (viejo=0.567 nuevo=0.591)  50s
+ep  9  train=0.811  val=0.575  (viejo=0.591 nuevo=0.565)  51s
+ep 10  train=0.829  val=0.591  (viejo=0.604 nuevo=0.583)  51s
+ep 11  train=0.856  val=0.576  (viejo=0.591 nuevo=0.566)  53s
+ep 12  train=0.869  val=0.590  (viejo=0.583 nuevo=0.594)  60s
+ep 13  train=0.888  val=0.600  (viejo=0.588 nuevo=0.607)  65s
+ep 14  train=0.894  val=0.585  (viejo=0.601 nuevo=0.574)  59s
+ep 15  train=0.907  val=0.597  (viejo=0.593 nuevo=0.599)  55s
+ep 16  train=0.914  val=0.598  (viejo=0.598 nuevo=0.597)  54s
+ep 17  train=0.922  val=0.591  (viejo=0.580 nuevo=0.597)  58s
+ep 18  train=0.929  val=0.599  (viejo=0.606 nuevo=0.594)  53s
+ep 19  train=0.937  val=0.592  (viejo=0.585 nuevo=0.595)  60s
+ep 20  train=0.930  val=0.597  (viejo=0.591 nuevo=0.600)  57s
+ep 21  train=0.937  val=0.601  (viejo=0.593 nuevo=0.605)  54s
+ep 22  train=0.939  val=0.600  (viejo=0.591 nuevo=0.605)  56s
+ep 23  train=0.941  val=0.599  (viejo=0.585 nuevo=0.607)  55s
+ep 24  train=0.942  val=0.602  (viejo=0.596 nuevo=0.605)  54s
+ep 25  train=0.946  val=0.600  (viejo=0.588 nuevo=0.607)  55s
+
+[B_finetune] mejor val acc: 0.602
+
+--- peores clases ---
+  0.20  Salix humboldtiana             n= 10  -> Pinus_spp(1), Dodonaea viscosa(1)
+  0.22  Lysiloma acapulcense           n=  9  -> Acacia pennatula(4), Pteridium aquilinum(1)
+  0.24  Ostrya virginiana              n= 21  -> Prunus serotina(6), Cucurbita foetidissima(4)
+  0.25  Crataegus mexicana             n=  8  -> Jatropha curcas(2), Solanum rostratum(1)
+  0.26  Mirabilis jalapa               n= 31  -> Penstemon roseus(3), Passiflora exsudans(2)
+  0.27  Bursera_spp                    n= 15  -> Taxodium mucronatum(2), Jatropha curcas(1)
+  0.27  Ceiba aesculifolia             n= 11  -> Ipomoea arborescens(3), Plumeria rubra(1)
+  0.30  Cupressus lusitanica           n= 10  -> Abies religiosa(2), Juniperus flaccida(2)
+  0.30  Taxodium mucronatum            n= 10  -> Cupressus lusitanica(2), Lysiloma acapulcense(1)
+  0.31  Cornus disciflora              n= 13  -> Quercus_spp(2), Lantana camara(1)
+  0.32  Quercus_spp                    n= 22  -> Jatropha curcas(2), Cercocarpus macrophyllus(2)
+  0.32  Wigandia urens                 n= 25  -> Cucurbita foetidissima(3), Jatropha curcas(3)
+  0.33  Alnus acuminata                n= 15  -> Ficus insipida(2), Fraxinus uhdei(2)
+  0.33  Fraxinus uhdei                 n= 21  -> Jatropha curcas(3), Acacia pennatula(2)
+  0.35  Ficus insipida                 n= 17  -> Ceiba aesculifolia(4), Fraxinus uhdei(2)
