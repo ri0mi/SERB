@@ -1,0 +1,61 @@
+clase_v1,riesgo,meta,total,nuevo,viejo,occ_nuevas,falta_sin_viejo
+Abies religiosa,segura,80,85,85,0,48,0
+Acacia pennatula,segura,80,102,102,0,40,0
+Adiantum capillus-veneris,segura,80,85,85,0,56,0
+Agave_spp,irritante,150,160,160,0,88,0
+Alnus acuminata,segura,80,92,92,0,48,0
+Arbutus_spp,segura,80,86,86,0,40,0
+Asclepias curassavica,toxica,150,158,158,0,96,0
+Baccharis salicifolia,segura,80,91,91,0,40,0
+Buddleja sessiliflora,segura,80,96,96,0,40,0
+Bursera_spp,segura,80,98,98,0,40,0
+Castilleja tenuiflora,segura,80,82,82,0,40,0
+Ceiba aesculifolia,segura,80,88,88,0,48,0
+Cercocarpus macrophyllus,segura,80,92,92,0,24,0
+Clethra rosei,segura,80,68,68,0,26,12
+Cornus disciflora,segura,80,97,97,0,32,0
+Cosmos bipinnatus,segura,80,80,80,0,48,0
+Crataegus mexicana,segura,80,82,82,0,32,0
+Cucurbita foetidissima,toxica,150,153,153,0,88,0
+Cupressus lusitanica,segura,80,95,95,0,56,0
+Dahlia coccinea,segura,80,103,103,0,40,0
+Datura stramonium,toxica,150,150,150,0,80,0
+Dodonaea viscosa,segura,80,80,80,0,48,0
+Erythrina flabelliformis,toxica,150,172,172,0,72,0
+Euphorbia tanquahuete,irritante,150,153,153,0,80,0
+Ficus insipida,segura,80,86,86,0,32,0
+Fraxinus uhdei,segura,80,82,82,0,48,0
+Guazuma ulmifolia,segura,80,81,81,0,32,0
+Ipomoea arborescens,segura,80,80,80,0,48,0
+Jatropha curcas,toxica,150,158,158,0,88,0
+Juniperus flaccida,segura,80,95,95,0,47,0
+Lantana camara,toxica,150,156,156,0,112,0
+Lobelia laxiflora,toxica,150,151,151,0,80,0
+Lysiloma acapulcense,segura,80,90,90,0,40,0
+Mammillaria jaliscana,segura,80,85,85,0,56,0
+Mirabilis jalapa,toxica,150,150,150,0,80,0
+Montanoa tomentosa,toxica,150,161,161,0,64,0
+Nolina parviflora,segura,80,95,95,0,64,0
+Opuntia jaliscana,segura,80,81,81,0,40,0
+Ostrya virginiana,segura,80,88,88,0,40,0
+Passiflora exsudans,segura,80,82,82,0,24,0
+Penstemon roseus,segura,80,86,86,0,48,0
+Phytolacca icosandra,toxica,150,167,167,0,80,0
+Pinus_spp,segura,80,100,100,0,40,0
+Plumeria rubra,irritante,150,155,155,0,96,0
+Prunus serotina,toxica,150,157,157,0,80,0
+Pteridium aquilinum,toxica,150,157,157,0,104,0
+Quercus_spp,segura,80,94,94,0,32,0
+Ricinus communis,letal,150,153,153,0,96,0
+Salix humboldtiana,segura,80,100,100,0,48,0
+Salvia_spp,desconocida,80,87,87,0,40,0
+Sedum jaliscanum,segura,80,91,91,0,48,0
+Selaginella lepidophylla,segura,80,88,88,0,56,0
+Solanum nigrescens,toxica,150,150,150,0,48,0
+Solanum rostratum,toxica,150,154,154,0,96,0
+Symphoricarpos microphyllus,toxica,150,163,163,0,64,0
+Tagetes lucida,segura,80,81,81,0,40,0
+Taxodium mucronatum,segura,80,91,91,0,56,0
+Tillandsia recurvata,segura,80,81,81,0,56,0
+Wigandia urens,irritante,150,161,161,0,88,0
+Zinnia peruviana,segura,80,83,83,0,56,0
