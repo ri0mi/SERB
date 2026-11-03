@@ -6,3 +6,4 @@
 *.onnx
 *.tar.gz
 __pycache__/
+*:Zone.Identifier
