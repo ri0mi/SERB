@@ -141,3 +141,32 @@ Proyecto modular (requisito de titulación, CUCEI-UdeG). Implica:
 - La interfaz debe incluir aviso: herramienta de apoyo a la
   identificación, no sustituto de determinación botánica profesional.
   No debe usarse para decidir consumo de plantas.
+
+
+## Estado del modelo (noviembre 2026)
+
+Modelo v1: `resultados/modelo_I_full.pt`
+- MobileNetV3-Large, 3 bloques descongelados, lr 3e-4, 30 epocas, semilla 42
+- Dataset: 13,364 imagenes, 60 clases, splits agrupados por occurrence_key
+- Val: 72.0% top-1, 84.3% top-3, 88.6% top-5
+
+Umbral de confianza: **0.60**. Con ese valor el sistema responde en 52% de
+los casos, acierta 94.7% (97.9% top-3), y rechaza 88% de las especies
+fuera del catalogo. Calibrado contra `dataset_rechazo/` (421 imagenes de
+especies NO incluidas en v1). Detalle en `resultados/calibracion.json`.
+
+Respuesta en DOS niveles: identifica o rechaza. Se evaluo una respuesta
+intermedia a nivel de genero (agregando probabilidades por genero) y se
+descarto: el modelo plano de 60 clases no concentra probabilidad por
+genero cuando falla la especie. Queda documentado como limitacion de v1.
+
+## Reglas de inferencia
+
+- Umbral 0.60 por defecto, configurable.
+- Por debajo del umbral: "No identificada", riesgo `desconocido`.
+- El riesgo mostrado es el MAS SEVERO entre los candidatos presentados,
+  no el del primero.
+- La salida NUNCA afirma comestibilidad. Siempre incluye el aviso de que
+  es apoyo a la identificacion, no sustituto de determinacion botanica.
+- El preprocesamiento debe ser identico al de evaluacion: Resize(256),
+  CenterCrop(224), normalizacion ImageNet.
