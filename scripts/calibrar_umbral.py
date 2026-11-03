@@ -58,13 +58,14 @@ def inferir(items, etiqueta):
     with torch.no_grad():
         for x, idx in dl:
             probs = F.softmax(modelo(x.to(dev)), 1).cpu()
-            top = probs.topk(3, dim=1)
+            top = probs.topk(5, dim=1)
             for k, i in enumerate(idx.tolist()):
                 salida.append({
                     "meta": items[i][1],
                     "conf": top.values[k][0].item(),
                     "pred": clases[top.indices[k][0].item()],
                     "top3": [clases[j] for j in top.indices[k].tolist()],
+                    "probs": probs[k].tolist(),
                     "top3_conf": [v for v in top.values[k].tolist()],
                 })
     print(f"  {etiqueta}: {len(salida)}")
@@ -127,10 +128,10 @@ for nom, rs in [("val catalogo", r_val), ("congeneres", r_cong), ("fuera", r_fue
 
 json.dump({
     "val": [{"conf": r["conf"], "pred": r["pred"], "real": r["meta"]["clase"],
-             "top3": r["top3"]} for r in r_val],
+             "top3": r["top3"], "top3_conf": r["top3_conf"], "probs": r["probs"]} for r in r_val],
     "congenere": [{"conf": r["conf"], "pred": r["pred"], "especie": r["meta"]["especie"],
-                   "genero": r["meta"]["genero"], "top3": r["top3"]} for r in r_cong],
+                   "genero": r["meta"]["genero"], "top3": r["top3"], "top3_conf": r["top3_conf"], "probs": r["probs"]} for r in r_cong],
     "fuera": [{"conf": r["conf"], "pred": r["pred"], "especie": r["meta"]["especie"],
-               "top3": r["top3"]} for r in r_fuera],
+               "top3": r["top3"], "top3_conf": r["top3_conf"], "probs": r["probs"]} for r in r_fuera],
 }, open("resultados/calibracion.json", "w", encoding="utf-8"), indent=1, ensure_ascii=False)
 print("\nDetalle en resultados/calibracion.json")
