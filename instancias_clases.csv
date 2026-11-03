@@ -1,0 +1,61 @@
+id_clase,nombre_clase,nivel_riesgo,parte_afectada,es_pirofita,es_invasora,aviso_usuario
+0,Abies religiosa,segura,,PENDIENTE,PENDIENTE,Sin riesgo reportado. No sustituye determinacion botanica.
+1,Acacia pennatula,segura,,PENDIENTE,PENDIENTE,Sin riesgo reportado. No sustituye determinacion botanica.
+2,Adiantum capillus-veneris,segura,,PENDIENTE,PENDIENTE,Sin riesgo reportado. No sustituye determinacion botanica.
+3,Agave_spp,irritante,savia,PENDIENTE,PENDIENTE,Precaucion: irritante (savia). No consumir.
+4,Alnus acuminata,segura,,PENDIENTE,PENDIENTE,Sin riesgo reportado. No sustituye determinacion botanica.
+5,Arbutus_spp,segura,,PENDIENTE,PENDIENTE,Sin riesgo reportado. No sustituye determinacion botanica.
+6,Asclepias curassavica,toxica,,PENDIENTE,PENDIENTE,Precaucion: toxica. No consumir.
+7,Baccharis salicifolia,segura,,PENDIENTE,PENDIENTE,Sin riesgo reportado. No sustituye determinacion botanica.
+8,Buddleja sessiliflora,segura,,PENDIENTE,PENDIENTE,Sin riesgo reportado. No sustituye determinacion botanica.
+9,Bursera_spp,segura,,PENDIENTE,PENDIENTE,Sin riesgo reportado. No sustituye determinacion botanica.
+10,Castilleja tenuiflora,segura,,PENDIENTE,PENDIENTE,Sin riesgo reportado. No sustituye determinacion botanica.
+11,Ceiba aesculifolia,segura,,PENDIENTE,PENDIENTE,Sin riesgo reportado. No sustituye determinacion botanica.
+12,Cercocarpus macrophyllus,segura,,PENDIENTE,PENDIENTE,Sin riesgo reportado. No sustituye determinacion botanica.
+13,Clethra rosei,segura,,PENDIENTE,PENDIENTE,Sin riesgo reportado. No sustituye determinacion botanica.
+14,Cornus disciflora,segura,,PENDIENTE,PENDIENTE,Sin riesgo reportado. No sustituye determinacion botanica.
+15,Cosmos bipinnatus,segura,,PENDIENTE,PENDIENTE,Sin riesgo reportado. No sustituye determinacion botanica.
+16,Crataegus mexicana,segura,,PENDIENTE,PENDIENTE,Sin riesgo reportado. No sustituye determinacion botanica.
+17,Cucurbita foetidissima,toxica,,PENDIENTE,PENDIENTE,Precaucion: toxica. No consumir.
+18,Cupressus lusitanica,segura,,PENDIENTE,PENDIENTE,Sin riesgo reportado. No sustituye determinacion botanica.
+19,Dahlia coccinea,segura,,PENDIENTE,PENDIENTE,Sin riesgo reportado. No sustituye determinacion botanica.
+20,Datura stramonium,toxica,toda,PENDIENTE,PENDIENTE,Precaucion: toxica (toda). No consumir.
+21,Dodonaea viscosa,segura,,PENDIENTE,PENDIENTE,Sin riesgo reportado. No sustituye determinacion botanica.
+22,Erythrina flabelliformis,toxica,semillas,PENDIENTE,PENDIENTE,Precaucion: toxica (semillas). No consumir.
+23,Euphorbia tanquahuete,irritante,látex,PENDIENTE,PENDIENTE,Precaucion: irritante (látex). No consumir.
+24,Ficus insipida,segura,,PENDIENTE,PENDIENTE,Sin riesgo reportado. No sustituye determinacion botanica.
+25,Fraxinus uhdei,segura,,PENDIENTE,PENDIENTE,Sin riesgo reportado. No sustituye determinacion botanica.
+26,Guazuma ulmifolia,segura,,PENDIENTE,PENDIENTE,Sin riesgo reportado. No sustituye determinacion botanica.
+27,Ipomoea arborescens,segura,,PENDIENTE,PENDIENTE,Sin riesgo reportado. No sustituye determinacion botanica.
+28,Jatropha curcas,toxica,,PENDIENTE,PENDIENTE,Precaucion: toxica. No consumir.
+29,Juniperus flaccida,segura,,PENDIENTE,PENDIENTE,Sin riesgo reportado. No sustituye determinacion botanica.
+30,Lantana camara,toxica,,PENDIENTE,PENDIENTE,Precaucion: toxica. No consumir.
+31,Lobelia laxiflora,toxica,,PENDIENTE,PENDIENTE,Precaucion: toxica. No consumir.
+32,Lysiloma acapulcense,segura,,PENDIENTE,PENDIENTE,Sin riesgo reportado. No sustituye determinacion botanica.
+33,Mammillaria jaliscana,segura,,PENDIENTE,PENDIENTE,Sin riesgo reportado. No sustituye determinacion botanica.
+34,Mirabilis jalapa,toxica,semillas y raíces,PENDIENTE,PENDIENTE,Precaucion: toxica (semillas y raíces). No consumir.
+35,Montanoa tomentosa,toxica,,PENDIENTE,PENDIENTE,Precaucion: toxica. No consumir.
+36,Nolina parviflora,segura,,PENDIENTE,PENDIENTE,Sin riesgo reportado. No sustituye determinacion botanica.
+37,Opuntia jaliscana,segura,,PENDIENTE,PENDIENTE,Sin riesgo reportado. No sustituye determinacion botanica.
+38,Ostrya virginiana,segura,,PENDIENTE,PENDIENTE,Sin riesgo reportado. No sustituye determinacion botanica.
+39,Passiflora exsudans,segura,,PENDIENTE,PENDIENTE,Sin riesgo reportado. No sustituye determinacion botanica.
+40,Penstemon roseus,segura,,PENDIENTE,PENDIENTE,Sin riesgo reportado. No sustituye determinacion botanica.
+41,Phytolacca icosandra,toxica,,PENDIENTE,PENDIENTE,Precaucion: toxica. No consumir.
+42,Pinus_spp,segura,,PENDIENTE,PENDIENTE,Sin riesgo reportado. No sustituye determinacion botanica.
+43,Plumeria rubra,irritante,látex,PENDIENTE,PENDIENTE,Precaucion: irritante (látex). No consumir.
+44,Prunus serotina,toxica,"hojas, semilla, corteza",PENDIENTE,PENDIENTE,"Precaucion: toxica (hojas, semilla, corteza). No consumir."
+45,Pteridium aquilinum,toxica,,PENDIENTE,PENDIENTE,Precaucion: toxica. No consumir.
+46,Quercus_spp,segura,,PENDIENTE,PENDIENTE,Sin riesgo reportado. No sustituye determinacion botanica.
+47,Ricinus communis,letal,semillas,PENDIENTE,PENDIENTE,Precaucion: letal (semillas). No consumir.
+48,Salix humboldtiana,segura,,PENDIENTE,PENDIENTE,Sin riesgo reportado. No sustituye determinacion botanica.
+49,Salvia_spp,desconocida,,PENDIENTE,PENDIENTE,Riesgo no verificado. No consumir.
+50,Sedum jaliscanum,segura,,PENDIENTE,PENDIENTE,Sin riesgo reportado. No sustituye determinacion botanica.
+51,Selaginella lepidophylla,segura,,PENDIENTE,PENDIENTE,Sin riesgo reportado. No sustituye determinacion botanica.
+52,Solanum nigrescens,toxica,,PENDIENTE,PENDIENTE,Precaucion: toxica. No consumir.
+53,Solanum rostratum,toxica,,PENDIENTE,PENDIENTE,Precaucion: toxica. No consumir.
+54,Symphoricarpos microphyllus,toxica,frutos,PENDIENTE,PENDIENTE,Precaucion: toxica (frutos). No consumir.
+55,Tagetes lucida,segura,,PENDIENTE,PENDIENTE,Sin riesgo reportado. No sustituye determinacion botanica.
+56,Taxodium mucronatum,segura,,PENDIENTE,PENDIENTE,Sin riesgo reportado. No sustituye determinacion botanica.
+57,Tillandsia recurvata,segura,,PENDIENTE,PENDIENTE,Sin riesgo reportado. No sustituye determinacion botanica.
+58,Wigandia urens,irritante,,PENDIENTE,PENDIENTE,Precaucion: irritante. No consumir.
+59,Zinnia peruviana,segura,,PENDIENTE,PENDIENTE,Sin riesgo reportado. No sustituye determinacion botanica.
