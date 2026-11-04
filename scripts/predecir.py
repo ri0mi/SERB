@@ -3,7 +3,8 @@
 Inferencia del clasificador SERB v1.
 
 Uso CLI (desde la raiz del proyecto):
-    python scripts/predecir.py foto.jpg [otra.jpg ...] [--umbral 0.60] [--cpu]
+    python scripts/predecir.py foto.jpg [otra.jpg ...] [--umbral 0.60]
+                               [--corte-riesgo 0.03] [--cpu]
 
 Uso como modulo (demo):
     from scripts.predecir import Predictor
@@ -16,8 +17,11 @@ Reglas (ver CLAUDE.md, "Reglas de inferencia"):
     dataset_256), luego Resize(256), CenterCrop(224), normalizacion ImageNet.
   - Confianza top-1 < umbral -> "No identificada", riesgo "desconocida", sin
     candidatos presentados.
-  - El riesgo reportado es el MAS SEVERO entre los candidatos del top-3
-    mostrados, no el del primero.
+  - El riesgo reportado es el MAS SEVERO entre los candidatos del top-3 con
+    probabilidad >= corte de riesgo (el top-1 cuenta siempre), no el del
+    primero. Los candidatos bajo el corte se muestran con su propio riesgo y
+    cuenta_para_riesgo=False. El corte 0.03 sale del barrido sobre val:
+    sobrealerta 39.0% -> 7.6% a cambio de 1 subestimado mas (3 -> 4).
   - Nunca se afirma comestibilidad; siempre va el aviso general.
 """
 import argparse, csv, io, json, sys
@@ -32,6 +36,7 @@ RAIZ = Path(__file__).resolve().parent.parent
 CKPT = RAIZ / "resultados/modelo_I_full.pt"
 INSTANCIAS = RAIZ / "instancias_clases.csv"
 UMBRAL = 0.60
+CORTE_RIESGO = 0.03
 TOP_K = 3
 MODELO_VERSION = "v1 (modelo_I_full)"
 
@@ -75,8 +80,10 @@ def severidad(nivel):
 
 
 class Predictor:
-    def __init__(self, ckpt=CKPT, instancias=INSTANCIAS, umbral=UMBRAL, device=None):
+    def __init__(self, ckpt=CKPT, instancias=INSTANCIAS, umbral=UMBRAL,
+                 corte_riesgo=CORTE_RIESGO, device=None):
         self.umbral = umbral
+        self.corte_riesgo = corte_riesgo
         self.dev = torch.device(device or ("cuda" if torch.cuda.is_available() else "cpu"))
 
         ck = torch.load(ckpt, weights_only=False, map_location=self.dev)
@@ -99,52 +106,60 @@ class Predictor:
                 "aviso": i["aviso_usuario"]}
 
     @torch.no_grad()
-    def predecir(self, ruta, umbral=None):
+    def predecir(self, ruta, umbral=None, corte_riesgo=None):
         umbral = self.umbral if umbral is None else umbral
+        corte = self.corte_riesgo if corte_riesgo is None else corte_riesgo
         x = TF(reducir(Image.open(ruta).convert("RGB"))).unsqueeze(0).to(self.dev)
         probs = F.softmax(self.modelo(x), 1)[0].cpu()
         top = probs.topk(TOP_K)
         conf = top.values[0].item()
 
-        base = {"imagen": str(ruta), "modelo": MODELO_VERSION, "umbral": umbral,
+        base = {"imagen": str(ruta), "modelo": MODELO_VERSION,
+                "umbral": umbral, "corte_riesgo": corte,
                 "confianza": round(conf, 4), "aviso_general": AVISO_GENERAL}
 
         if conf < umbral:
             return {**base, "identificada": False, "identificacion": "No identificada",
                     "top3": [], "riesgo": "desconocida", "aviso": AVISO_NO_ID}
 
-        top3 = [self._candidato(self.clases[j], v)
-                for v, j in zip(top.values.tolist(), top.indices.tolist())]
+        top3 = []
+        for k, (v, j) in enumerate(zip(top.values.tolist(), top.indices.tolist())):
+            c = self._candidato(self.clases[j], v)
+            c["cuenta_para_riesgo"] = k == 0 or v >= corte   # v sin redondear
+            top3.append(c)
         # en empate gana el de mayor confianza (max devuelve el primero)
-        peor = max(top3, key=lambda c: severidad(c["riesgo"]))
+        peor = max((c for c in top3 if c["cuenta_para_riesgo"]),
+                   key=lambda c: severidad(c["riesgo"]))
         return {**base, "identificada": True, "identificacion": top3[0]["clase"],
                 "top3": top3,
                 "riesgo": peor["riesgo"],
                 "riesgo_origen": peor["clase"],
                 "aviso": peor["aviso"]}
 
-    def predecir_varias(self, rutas, umbral=None):
-        return [self.predecir(r, umbral) for r in rutas]
+    def predecir_varias(self, rutas, umbral=None, corte_riesgo=None):
+        return [self.predecir(r, umbral, corte_riesgo) for r in rutas]
 
 
 _predictor = None
 
-def predecir(ruta, umbral=UMBRAL):
+def predecir(ruta, umbral=UMBRAL, corte_riesgo=CORTE_RIESGO):
     """Atajo funcional: carga el modelo la primera vez y lo reutiliza."""
     global _predictor
     if _predictor is None:
         _predictor = Predictor()
-    return _predictor.predecir(ruta, umbral)
+    return _predictor.predecir(ruta, umbral, corte_riesgo)
 
 
 def main():
     ap = argparse.ArgumentParser(description="Identifica una planta y reporta su nivel de riesgo.")
     ap.add_argument("imagenes", nargs="+", help="ruta(s) a imagen")
     ap.add_argument("--umbral", type=float, default=UMBRAL, help=f"confianza minima (default {UMBRAL})")
+    ap.add_argument("--corte-riesgo", type=float, default=CORTE_RIESGO,
+                    help=f"prob. minima de un candidato del top-3 para contar en el riesgo (default {CORTE_RIESGO})")
     ap.add_argument("--cpu", action="store_true", help="forzar CPU aunque haya GPU")
     a = ap.parse_args()
 
-    p = Predictor(umbral=a.umbral, device="cpu" if a.cpu else None)
+    p = Predictor(umbral=a.umbral, corte_riesgo=a.corte_riesgo, device="cpu" if a.cpu else None)
     salida = []
     for ruta in a.imagenes:
         try:

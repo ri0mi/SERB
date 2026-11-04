@@ -1,0 +1,69 @@
+{
+  "version": "1.0",
+  "fecha": "2026-11-03",
+  "checkpoint_origen": "resultados/modelo_I_full.pt",
+  "sha256_checkpoint": "7321de6d8f561fe481210f297ae56d1497833a91ea10ffb364a78a835c477203",
+  "onnx": "serb_v1.0.onnx",
+  "sha256_onnx": "41307f5bf1f3e37deb70a08c2c09e23f7c2a3a6e0fa954e289ef74849fee986a",
+  "opset": 18,
+  "backbone": "MobileNetV3-Large",
+  "num_clases": 60,
+  "entrada": {
+    "nombre": "imagen",
+    "forma": [
+      "batch",
+      3,
+      224,
+      224
+    ],
+    "dtype": "float32",
+    "orden_canales": "RGB",
+    "layout": "NCHW"
+  },
+  "salida": {
+    "nombre": "logits",
+    "forma": [
+      "batch",
+      60
+    ],
+    "nota": "logits sin softmax"
+  },
+  "preprocesamiento": [
+    "convertir a RGB",
+    "si el lado corto > 256: reducir con LANCZOS al lado corto 256",
+    "recomprimir como JPEG calidad 90 (ver limitacion 1 en CLAUDE.md)",
+    "Resize(256) bilineal",
+    "CenterCrop(224)",
+    "escalar a [0,1]",
+    "normalizar con media/std"
+  ],
+  "normalizacion": {
+    "media": [
+      0.485,
+      0.456,
+      0.406
+    ],
+    "std": [
+      0.229,
+      0.224,
+      0.225
+    ]
+  },
+  "umbral_confianza": 0.6,
+  "corte_riesgo": 0.03,
+  "dataset": {
+    "splits": "splits.csv",
+    "sha256_splits": "078b1d4dadace1bfd5e9188a0e7403bb6c3fc18743c80c3fb2f40cbd105b4f34",
+    "instancias": "instancias_clases.csv",
+    "sha256_instancias": "f2b32473c890e38f5e680a54ff8b3488bcf6dd0a4fb308633493402ade4c5976"
+  },
+  "verificacion_onnx": {
+    "imagenes_val": 50,
+    "semilla": 42,
+    "dif_max_probabilidad": 3.1888484954833984e-06,
+    "dif_max_batch1": 1.4435499906539917e-08,
+    "top1_coincide": "50/50",
+    "onnxruntime": "1.31.1",
+    "torch": "2.14.0+cpu"
+  }
+}

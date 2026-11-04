@@ -164,8 +164,12 @@ genero cuando falla la especie. Queda documentado como limitacion de v1.
 
 - Umbral 0.60 por defecto, configurable.
 - Por debajo del umbral: "No identificada", riesgo `desconocido`.
-- El riesgo mostrado es el MAS SEVERO entre los candidatos presentados,
-  no el del primero.
+- El riesgo mostrado es el MAS SEVERO entre los candidatos del top-3 con
+  probabilidad >= corte de riesgo (0.03 por defecto, `--corte-riesgo`;
+  el top-1 cuenta siempre), no el del primero. Los candidatos bajo el
+  corte se muestran con su propio riesgo y `cuenta_para_riesgo=false`.
+  Barrido sobre val: con corte 0.03 la sobrealerta baja de 39.0% a 7.6% y
+  el riesgo subestimado sube de 3 a 4 casos (ver limitacion 2).
 - La salida NUNCA afirma comestibilidad. Siempre incluye el aviso de que
   es apoyo a la identificacion, no sustituto de determinacion botanica.
 - El preprocesamiento debe ser identico al de evaluacion: reduccion LANCZOS
