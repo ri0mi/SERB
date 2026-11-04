@@ -168,5 +168,34 @@ genero cuando falla la especie. Queda documentado como limitacion de v1.
   no el del primero.
 - La salida NUNCA afirma comestibilidad. Siempre incluye el aviso de que
   es apoyo a la identificacion, no sustituto de determinacion botanica.
-- El preprocesamiento debe ser identico al de evaluacion: Resize(256),
-  CenterCrop(224), normalizacion ImageNet.
+- El preprocesamiento debe ser identico al de evaluacion: reduccion LANCZOS
+  al lado corto 256 + recompresion JPEG q90 (lo que hizo redimensionar.py
+  para generar dataset_256), luego Resize(256), CenterCrop(224),
+  normalizacion ImageNet. Ver limitacion 1.
+
+## Limitaciones conocidas de v1
+
+1. **Sensibilidad a la recompresion JPEG.** Una diferencia media de 1.8
+   niveles de pixel (la que introduce guardar en JPEG q90) mueve la
+   confianza de 0.68 a 0.28 en la misma imagen. `scripts/predecir.py`
+   replica el preprocesamiento de `redimensionar.py` para compensar
+   (diferencia contra `calibracion.json` <= 5e-5). Riesgo conocido para el
+   despliegue en hardware: la camara entrega frames crudos, no JPEG
+   recomprimidos, y el umbral calibrado puede no ser valido sobre ellos.
+   Para v2: agregar recompresion JPEG como augmentation de entrenamiento.
+
+2. **Umbral y corte elegidos sobre validacion.** Tanto el umbral 0.60 como
+   el corte de probabilidad 0.03 de la regla de severidad se eligieron
+   sobre el split `val` (2,002 imagenes); las tasas reportadas son
+   optimistas. Confirmar contra el split `test` (2,091 imagenes, sin usar
+   hasta ahora) antes de la entrega final.
+
+3. **Riesgo subestimado que ninguna regla corrige.** Tres casos en `val` en
+   que el modelo predice con alta confianza una clase equivocada y todo el
+   top-3 es `segura`, asi que la regla del mas severo no tiene de donde
+   elevar:
+   - Ricinus communis (letal) -> Quercus_spp 0.86
+   - Prunus serotina (toxica) -> Ostrya virginiana 0.71
+   - Salvia_spp (desconocida) -> Fraxinus uhdei 0.85
+
+   Confianza alta no garantiza correccion.
