@@ -33,6 +33,7 @@ onnx==1.23.2
 onnx-ir==1.1.0
 onnxruntime==1.31.1
 onnxscript==0.7.2
+opencv-python==5.0.0.93
 packaging==26.0
 pandas==3.0.5
 pillow==12.3.0

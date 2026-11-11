@@ -10,6 +10,7 @@ Uso como modulo (demo):
     from scripts.predecir import Predictor
     p = Predictor()               # carga una sola vez
     r = p.predecir("foto.jpg")    # dict
+    r = p.predecir_promedio([frame1, frame2, ...])   # PIL RGB, promedia probs
 
 Reglas (ver CLAUDE.md, "Reglas de inferencia"):
   - Preprocesamiento identico al de evaluacion: reduccion LANCZOS al lado
@@ -106,13 +107,40 @@ class Predictor:
                 "aviso": i["aviso_usuario"]}
 
     @torch.no_grad()
+    def probabilidades(self, imagenes):
+        """Vectores softmax (N x clases, CPU) para rutas o PIL.Image.
+
+        Cada imagen pasa por reducir() + TF, igual que en evaluacion. Un frame
+        de camara debe llegar como PIL RGB sin recomprimir: reducir() aplica el
+        JPEG q90 que espera el modelo.
+        """
+        if not isinstance(imagenes, (list, tuple)):
+            imagenes = [imagenes]
+        ims = [im.convert("RGB") if isinstance(im, Image.Image) else Image.open(im).convert("RGB")
+               for im in imagenes]
+        x = torch.stack([TF(reducir(im)) for im in ims]).to(self.dev)
+        return F.softmax(self.modelo(x), 1).cpu()
+
     def predecir(self, ruta, umbral=None, corte_riesgo=None):
+        return self.decidir(self.probabilidades(ruta)[0], ruta, umbral, corte_riesgo)
+
+    def predecir_promedio(self, imagenes, umbral=None, corte_riesgo=None, nombre="captura"):
+        """Test-time ensembling: promedia los vectores de probabilidad de
+        varias imagenes de la misma escena (p. ej. frames seguidos) y aplica
+        las reglas de decision sobre el promedio."""
+        p = self.probabilidades(imagenes)
+        r = self.decidir(p.mean(0), nombre, umbral, corte_riesgo)
+        j = p.mean(0).argmax().item()
+        r["n_imagenes"] = len(p)
+        r["confianza_por_imagen"] = [round(v, 4) for v in p[:, j].tolist()]
+        return r
+
+    def decidir(self, probs, imagen="", umbral=None, corte_riesgo=None):
         umbral = self.umbral if umbral is None else umbral
         corte = self.corte_riesgo if corte_riesgo is None else corte_riesgo
-        x = TF(reducir(Image.open(ruta).convert("RGB"))).unsqueeze(0).to(self.dev)
-        probs = F.softmax(self.modelo(x), 1)[0].cpu()
         top = probs.topk(TOP_K)
         conf = top.values[0].item()
+        ruta = imagen
 
         base = {"imagen": str(ruta), "modelo": MODELO_VERSION,
                 "umbral": umbral, "corte_riesgo": corte,

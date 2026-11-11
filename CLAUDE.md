@@ -188,6 +188,31 @@ genero cuando falla la especie. Queda documentado como limitacion de v1.
    recomprimidos, y el umbral calibrado puede no ser valido sobre ellos.
    Para v2: agregar recompresion JPEG como augmentation de entrenamiento.
 
+   **Variacion entre capturas (medido en simulacion, nov 2026).** Sin camara
+   en WSL; se simularon frames crudos reescalando originales de `val` a 720p
+   sin JPEG. Pasando por `reducir()` (con su q90), el agregado coincide con la
+   ruta de archivo (600 img: cobertura 53.2% vs 54.0%, acierto en respondidas
+   93.7% vs 93.5%, sin sesgo de confianza), pero imagen por imagen no: solo
+   cambiar el camino de reescalado mueve la confianza 0.034 en promedio (p95
+   0.11, max 0.29), cambia el top-1 en ~9% y la decision responder/rechazar
+   en ~5%. Saltarse el q90 duplica la diferencia (0.075) y sube los errores
+   aceptados (20 -> 24 de 600). Consecuencia: dos capturas de la misma planta
+   pueden dar una "identificada" y otra "no identificada" si la confianza
+   esta cerca de 0.60.
+   Mitigacion en `demo/demo_webcam.py`: cada captura promedia los vectores de
+   probabilidad de 5 frames seguidos (`Predictor.predecir_promedio`,
+   test-time ensembling) y decide sobre el promedio; la pantalla muestra la
+   confianza, el rango por frame y "CERCA DEL UMBRAL" si |conf-0.60| < 0.05.
+   Simulacion de 2 capturas independientes por imagen (300 de `val`, frames
+   720p + ruido sigma=3 + desplazamiento 0-4 px): la decision cambia entre
+   capturas 8.7% con 1 frame vs 2.7% con promedio de 5; top-1 cambia 10.0% vs
+   4.7%; cobertura 55.0% vs 52.0%, acierto en respondidas 97.6% vs 99.4%
+   (n chico, ~160 respondidas: solo indica direccion). El umbral se calibro
+   con imagenes sueltas, no con promedios; el promedio lo vuelve algo mas
+   conservador (rechaza mas), que es la direccion segura. Ninguna de estas
+   cifras sustituye una prueba con camara real (ruido de sensor, denoise,
+   MJPEG de webcams USB): pendiente.
+
 2. **Umbral y corte elegidos sobre validacion.** Tanto el umbral 0.60 como
    el corte de probabilidad 0.03 de la regla de severidad se eligieron
    sobre el split `val` (2,002 imagenes); las tasas reportadas son
