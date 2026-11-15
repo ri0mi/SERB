@@ -3,13 +3,19 @@
 Demostracion en vivo del clasificador SERB v1.
 
 Uso (desde la raiz del proyecto, env `serb`):
-    python demo/demo_webcam.py                    # camara 0
+    python demo/demo_webcam.py                    # camara 0 + galeria demo/galeria/
+    python demo/demo_webcam.py --carpeta fotos/   # galeria en otra carpeta
     python demo/demo_webcam.py --camara 1         # otra camara (o ruta a video)
-    python demo/demo_webcam.py --carpeta fotos/   # sin camara: recorre imagenes
+
+Camara y galeria conviven en la misma sesion; se cambia con C y G sin
+reiniciar. Si la camara no abre (p. ej. WSL sin usbipd) la demo arranca en
+galeria y lo indica en pantalla; C vuelve a intentar abrirla.
 
 Teclas:
+    C        modo camara
+    G        modo galeria
     ESPACIO  captura y clasifica (modo camara)
-    <- / ->  imagen anterior / siguiente (modo carpeta; tambien A / D)
+    <- / ->  imagen anterior / siguiente (modo galeria; tambien A / D)
     F        pantalla completa
     ESC / Q  salir
 
@@ -19,7 +25,7 @@ se decide sobre el promedio. Cada frame llega a Predictor como PIL RGB sin
 recomprimir y pasa por el mismo reducir() (LANCZOS 256 + JPEG q90) que las
 imagenes de calibracion. Ver CLAUDE.md, limitacion 1.
 
-Modo carpeta: cada imagen se clasifica una vez por la ruta de archivo, que es
+Modo galeria: cada imagen se clasifica una vez por la ruta de archivo, que es
 exactamente la ruta calibrada; no hay promedio.
 
 Las reglas de decision (umbral, corte de riesgo, regla del mas severo) viven
@@ -40,12 +46,13 @@ from scripts.predecir import (Predictor, AVISO_GENERAL, UMBRAL, CORTE_RIESGO,  #
 # --------------------------------------------------------------------------
 # Disposicion de la ventana (pixeles del lienzo; la ventana es redimensionable)
 W, H = 1600, 900
-PIE = 130                    # franja inferior del aviso
+PIE = 56                     # franja inferior del aviso (una sola linea)
 PANEL = 620                  # panel lateral derecho
 VID_W, VID_H = W - PANEL, H - PIE
 M = 30                       # margen interior del panel
 
-EXTS = {".jpg", ".jpeg", ".png", ".webp", ".bmp", ".tif", ".tiff"}
+EXTS = {".jpg", ".jpeg", ".jfif", ".png", ".webp", ".bmp", ".tif", ".tiff"}
+GALERIA_DEFECTO = RAIZ / "demo" / "galeria"
 
 # Colores RGB. Alto contraste: fondo casi negro, texto blanco.
 FONDO = (12, 12, 12)
@@ -73,6 +80,9 @@ RIESGO_TXT = {"segura": "segura", "irritante": "irritante", "desconocida": "desc
 TECLAS_IZQ = {65361, 2424832, 0x1000012, ord("a"), ord("A")}
 TECLAS_DER = {65363, 2555904, 0x1000014, ord("d"), ord("D")}
 TECLAS_SALIR = {27, ord("q"), ord("Q")}
+TECLAS_CAMARA = {ord("c"), ord("C")}
+TECLAS_GALERIA = {ord("g"), ord("G")}
+TECLAS_COMPLETA = {ord("f"), ord("F")}
 ESPACIO = 32
 
 # --------------------------------------------------------------------------
@@ -167,7 +177,7 @@ def dibujar_panel(estado):
         color, ctxt, rotulo = (55, 55, 55), TEXTO, "ERROR"
         sub, cabeza = estado.get("mensaje", ""), ""
     else:
-        color, ctxt, rotulo = (55, 55, 55), TEXTO, "SIN CAPTURA"
+        color, ctxt, rotulo = (55, 55, 55), TEXTO, estado.get("rotulo", "SIN CAPTURA")
         sub, cabeza = estado.get("mensaje", ""), ""
 
     d.rectangle([M, by, PANEL - M, by + bh], fill=color)
@@ -257,14 +267,21 @@ def dibujar_panel(estado):
 # Pie con el aviso (estatico)
 
 def dibujar_pie():
+    """Una sola linea, peso normal y tono tenue: debe leerse, no competir con
+    el resultado. Solo el rotulo "Aviso:" va resaltado."""
     im = Image.new("RGB", (W, PIE), (18, 18, 18))
     d = ImageDraw.Draw(im)
-    d.rectangle([0, 0, W, 5], fill=(255, 205, 0))
-    f = fuente(28, True)
-    lineas = envolver(d, "AVISO: " + AVISO_GENERAL, f, W - 60)
-    y0 = 5 + (PIE - 5 - len(lineas) * 38) // 2
-    for k, linea in enumerate(lineas):
-        d.text((30, y0 + k * 38), linea, font=f, fill=TEXTO)
+    d.rectangle([0, 0, W, 3], fill=(255, 205, 0))
+    rot = "Aviso: "
+    tam = 20
+    while tam > 12 and (ancho(d, rot, fuente(tam, True))
+                        + ancho(d, AVISO_GENERAL, fuente(tam))) > W - 60:
+        tam -= 1
+    fr, ft = fuente(tam, True), fuente(tam)
+    total = ancho(d, rot, fr) + ancho(d, AVISO_GENERAL, ft)
+    x, y = (W - total) // 2, 3 + (PIE - 3) // 2
+    d.text((x, y), rot, font=fr, fill=(255, 205, 0), anchor="lm")
+    d.text((x + ancho(d, rot, fr), y), AVISO_GENERAL, font=ft, fill=(205, 205, 205), anchor="lm")
     return im
 
 
@@ -294,14 +311,14 @@ def guia_modelo(d, x0, y0, nw, nh):
         d.line([(px, py), (px, py + sy * L)], fill=TEXTO, width=4)
 
 
-def etiqueta(d, xy, txt, tam=24):
+def etiqueta(d, xy, txt, tam=24, color=TEXTO):
     f = fuente(tam, True)
     x, y = xy
     d.rectangle([x - 10, y - 6, x + ancho(d, txt, f) + 10, y + tam + 10], fill=(0, 0, 0))
-    d.text((x, y), txt, font=f, fill=TEXTO)
+    d.text((x, y), txt, font=f, fill=color)
 
 
-def componer(rgb, panel, pie, ayuda, info=None, miniatura=None):
+def componer(rgb, panel, pie, ayuda, info=None, miniatura=None, alerta=None):
     lienzo = Image.new("RGB", (W, H), FONDO)
     d = ImageDraw.Draw(lienzo)
     if rgb is not None:
@@ -312,8 +329,12 @@ def componer(rgb, panel, pie, ayuda, info=None, miniatura=None):
         lienzo.paste(miniatura, (20, 20))
         d.rectangle([20, 20, 20 + miniatura.width, 20 + miniatura.height], outline=TEXTO, width=3)
         etiqueta(d, (30, 30 + miniatura.height), "última captura", 20)
+    y = 30 if miniatura is None else 80 + miniatura.height
     if info:
-        etiqueta(d, (30, 30 if miniatura is None else 80 + miniatura.height), info)
+        etiqueta(d, (30, y), info)
+        y += 50
+    if alerta:
+        etiqueta(d, (30, y), alerta, 22, NARANJA)
     etiqueta(d, (30, VID_H - 52), ayuda)
     lienzo.paste(panel, (VID_W, 0))
     lienzo.paste(pie, (0, VID_H))
@@ -354,115 +375,196 @@ def ventana_cerrada():
 
 
 # --------------------------------------------------------------------------
-# Modos
+# Fuentes de imagen
 
-def modo_camara(pred, a):
-    fuente_video = int(a.camara) if str(a.camara).isdigit() else a.camara
-    cap = cv2.VideoCapture(fuente_video)
-    if not cap.isOpened():
-        print(f"No se pudo abrir la camara {a.camara!r}. Sin camara, use --carpeta RUTA. "
+class Camara:
+    """Camara (o video) que puede no existir: abrir() nunca lanza."""
+
+    def __init__(self, origen, ancho_px, alto_px):
+        self.origen = int(origen) if str(origen).isdigit() else origen
+        self.ancho_px, self.alto_px = ancho_px, alto_px
+        self.cap = None
+
+    @property
+    def abierta(self):
+        return self.cap is not None
+
+    def abrir(self):
+        if self.abierta:
+            return True
+        try:
+            cap = cv2.VideoCapture(self.origen)
+            if not cap.isOpened():
+                cap.release()
+                return False
+            cap.set(cv2.CAP_PROP_FRAME_WIDTH, self.ancho_px)
+            cap.set(cv2.CAP_PROP_FRAME_HEIGHT, self.alto_px)
+        except cv2.error:
+            return False
+        self.cap = cap
+        return True
+
+    def leer(self):
+        """Frame RGB, o None si la camara no entrega."""
+        if not self.abierta:
+            return None
+        ok, frame = self.cap.read()
+        return cv2.cvtColor(frame, cv2.COLOR_BGR2RGB) if ok and frame is not None else None
+
+    def vaciar_buffer(self, n=4):
+        """Descarta frames viejos acumulados mientras se estuvo en galeria."""
+        for _ in range(n):
+            self.cap.grab()
+
+    def cerrar(self):
+        if self.abierta:
+            self.cap.release()
+            self.cap = None
+
+
+class Galeria:
+    """Imagenes de una carpeta, clasificadas por la ruta de archivo (la
+    calibrada) la primera vez que se muestran."""
+
+    def __init__(self, carpeta, pred):
+        self.carpeta, self.pred = Path(carpeta), pred
+        self.rutas = (sorted(p for p in self.carpeta.rglob("*") if p.suffix.lower() in EXTS)
+                      if self.carpeta.is_dir() else [])
+        self.i = 0
+        self._cache = {}
+
+    def mover(self, paso):
+        if self.rutas:
+            self.i = (self.i + paso) % len(self.rutas)
+
+    def vista(self):
+        """(rgb | None, panel, info) de la imagen actual."""
+        if not self.rutas:
+            return None, dibujar_panel({
+                "tipo": "espera", "rotulo": "GALERÍA VACÍA",
+                "mensaje": f"No hay imágenes en la carpeta «{self.carpeta.name}». "
+                           "Inicie con --carpeta RUTA."}), \
+                "GALERÍA  0/0"
+        ruta = self.rutas[self.i]
+        if self.i not in self._cache:
+            try:
+                rgb = np.asarray(Image.open(ruta).convert("RGB"))
+                r = self.pred.predecir(ruta)
+                self._cache[self.i] = (rgb, dibujar_panel({"tipo": "resultado", "resultado": r}))
+                print(f"[{ruta}] {r['identificacion']} conf={r['confianza']:.3f} riesgo={r['riesgo']}")
+            except (OSError, ValueError) as e:
+                print(f"[{ruta}] ERROR: {e}", file=sys.stderr)
+                self._cache[self.i] = (None, dibujar_panel(
+                    {"tipo": "error", "mensaje": f"{ruta.name}: {e}"}))
+        rgb, panel = self._cache[self.i]
+        return rgb, panel, f"GALERÍA  {self.i + 1}/{len(self.rutas)}  {ruta.relative_to(self.carpeta)}"
+
+
+# --------------------------------------------------------------------------
+# Sesion: camara y galeria en el mismo bucle
+
+AYUDA_CAM = "ESPACIO capturar    G galería    F pantalla completa    ESC salir"
+AYUDA_GAL = "←  →  navegar    C cámara    F pantalla completa    ESC salir"
+SIN_CAMARA = "Cámara no disponible · modo galería (C para reintentar)"
+PANEL_ESPERA = {"tipo": "espera",
+                "mensaje": "Encuadre la planta dentro del recuadro y pulse ESPACIO."}
+
+
+def capturar(pred, cam, primero, n):
+    """n frames seguidos sin recomprimir -> (resultado, frames) o (None, frames)
+    si la camara no entrego los n."""
+    frames = [primero]
+    while len(frames) < n:
+        f = cam.leer()
+        if f is None:
+            return None, frames
+        frames.append(f)
+    t0 = time.perf_counter()
+    r = pred.predecir_promedio([Image.fromarray(x) for x in frames],
+                               nombre=time.strftime("captura %H:%M:%S"))
+    print(f"[{r['imagen']}] {r['identificacion']} conf={r['confianza']:.3f} "
+          f"por_frame={r['confianza_por_imagen']} riesgo={r['riesgo']} "
+          f"({time.perf_counter() - t0:.2f}s)")
+    return r, frames
+
+
+def sesion(pred, a):
+    cam = Camara(a.camara, a.ancho, a.alto)
+    gal = Galeria(a.carpeta, pred)
+    pie = dibujar_pie()
+    panel_cam, mini = dibujar_panel(PANEL_ESPERA), None   # la ultima captura sobrevive al cambio de modo
+
+    alerta = None                 # texto naranja sobre la imagen (estado de la camara)
+    if cam.abrir():
+        modo = "camara"
+    else:
+        modo, alerta = "galeria", SIN_CAMARA
+        print(f"No se pudo abrir la camara {a.camara!r}: se arranca en galeria ({gal.carpeta}). "
               "(En WSL la webcam no es visible sin usbipd.)", file=sys.stderr)
-        return 1
-    cap.set(cv2.CAP_PROP_FRAME_WIDTH, a.ancho)
-    cap.set(cv2.CAP_PROP_FRAME_HEIGHT, a.alto)
-
-    pie = dibujar_pie()
-    panel = dibujar_panel({"tipo": "espera",
-                           "mensaje": "Encuadre la planta dentro del recuadro y pulse ESPACIO."})
-    ayuda = "ESPACIO capturar    F pantalla completa    ESC salir"
-    mini = None
+    redibujar = True              # la galeria solo se repinta cuando cambia algo
     abrir_ventana(a.pantalla_completa)
 
     while True:
-        ok, frame = cap.read()
-        if not ok:
-            print("La camara dejo de entregar frames.", file=sys.stderr)
-            break
-        rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-        cv2.imshow(VENTANA, componer(rgb, panel, pie, ayuda, miniatura=mini))
-        k = cv2.waitKeyEx(1)
+        if modo == "camara":
+            rgb = cam.leer()
+            if rgb is None:
+                print("La camara dejo de entregar frames: se pasa a galeria.", file=sys.stderr)
+                cam.cerrar()
+                modo, redibujar = "galeria", True
+                alerta = "La cámara dejó de entregar frames · modo galería (C para reintentar)"
+                continue
+            cv2.imshow(VENTANA, componer(rgb, panel_cam, pie, AYUDA_CAM, info="CÁMARA", miniatura=mini))
+            k = cv2.waitKeyEx(1)
+        else:
+            if redibujar:
+                g_rgb, g_panel, g_info = gal.vista()
+                cv2.imshow(VENTANA, componer(g_rgb, g_panel, pie, AYUDA_GAL, info=g_info, alerta=alerta))
+                redibujar = False
+            k = cv2.waitKeyEx(50)
+
         if k in TECLAS_SALIR or ventana_cerrada():
             break
-        if k in (ord("f"), ord("F")):
+        if k in TECLAS_COMPLETA:
             alternar_completa()
-        if k != ESPACIO:
-            continue
+        elif k in TECLAS_GALERIA and modo == "camara":
+            modo, redibujar = "galeria", True
+        elif k in TECLAS_CAMARA and modo == "galeria":
+            if cam.abierta:
+                cam.vaciar_buffer()
+                modo, alerta = "camara", None
+            elif cam.abrir():
+                modo, alerta = "camara", None
+            else:
+                alerta, redibujar = SIN_CAMARA, True
+        elif modo == "galeria" and k in TECLAS_DER:
+            gal.mover(1)
+            redibujar = True
+        elif modo == "galeria" and k in TECLAS_IZQ:
+            gal.mover(-1)
+            redibujar = True
+        elif modo == "camara" and k == ESPACIO:
+            cv2.imshow(VENTANA, componer(rgb, dibujar_panel(
+                {"tipo": "analizando",
+                 "mensaje": f"Tomando {a.frames} frames. Mantenga la cámara quieta."}),
+                pie, AYUDA_CAM, info="CÁMARA", miniatura=mini))
+            cv2.waitKey(1)
+            r, frames = capturar(pred, cam, rgb, a.frames)
+            if r is None:
+                panel_cam = dibujar_panel({"tipo": "error", "mensaje":
+                                           f"Solo se obtuvieron {len(frames)} de {a.frames} frames."})
+            else:
+                panel_cam = dibujar_panel({"tipo": "resultado", "resultado": r})
+                mini = miniatura_de(frames[len(frames) // 2])
 
-        # --- captura: N frames seguidos, sin recomprimir ---------------------
-        cv2.imshow(VENTANA, componer(rgb, dibujar_panel(
-            {"tipo": "analizando", "mensaje": f"Tomando {a.frames} frames. Mantenga la cámara quieta."}),
-            pie, ayuda, miniatura=mini))
-        cv2.waitKey(1)
-        frames = [rgb]
-        while len(frames) < a.frames:
-            ok, f = cap.read()
-            if not ok:
-                break
-            frames.append(cv2.cvtColor(f, cv2.COLOR_BGR2RGB))
-        if len(frames) < a.frames:
-            panel = dibujar_panel({"tipo": "error",
-                                   "mensaje": f"Solo se obtuvieron {len(frames)} de {a.frames} frames."})
-            continue
-        t0 = time.perf_counter()
-        r = pred.predecir_promedio([Image.fromarray(x) for x in frames],
-                                   nombre=time.strftime("captura %H:%M:%S"))
-        dt = time.perf_counter() - t0
-        panel = dibujar_panel({"tipo": "resultado", "resultado": r})
-        mini = miniatura_de(frames[len(frames) // 2])
-        print(f"[{r['imagen']}] {r['identificacion']} conf={r['confianza']:.3f} "
-              f"por_frame={r['confianza_por_imagen']} riesgo={r['riesgo']} ({dt:.2f}s)")
-
-    cap.release()
-    cv2.destroyAllWindows()
-    return 0
-
-
-def modo_carpeta(pred, a):
-    carpeta = Path(a.carpeta)
-    rutas = sorted(p for p in carpeta.rglob("*") if p.suffix.lower() in EXTS) if carpeta.is_dir() else []
-    if not rutas:
-        print(f"No hay imagenes en {carpeta}", file=sys.stderr)
-        return 1
-
-    pie = dibujar_pie()
-    ayuda = "←  →  navegar    F pantalla completa    ESC salir"
-    cache = {}
-    i, mostrado = 0, None
-    abrir_ventana(a.pantalla_completa)
-
-    while True:
-        if mostrado != i:
-            ruta = rutas[i]
-            if i not in cache:
-                try:
-                    rgb = np.asarray(Image.open(ruta).convert("RGB"))
-                    r = pred.predecir(ruta)
-                    cache[i] = (rgb, dibujar_panel({"tipo": "resultado", "resultado": r}))
-                    print(f"[{ruta}] {r['identificacion']} conf={r['confianza']:.3f} riesgo={r['riesgo']}")
-                except (OSError, ValueError) as e:
-                    print(f"[{ruta}] ERROR: {e}", file=sys.stderr)
-                    cache[i] = (None, dibujar_panel({"tipo": "error", "mensaje": f"{ruta.name}: {e}"}))
-            rgb, panel = cache[i]
-            info = f"{i + 1}/{len(rutas)}  {ruta.relative_to(carpeta)}"
-            cv2.imshow(VENTANA, componer(rgb, panel, pie, ayuda, info=info))
-            mostrado = i
-        k = cv2.waitKeyEx(50)
-        if k in TECLAS_SALIR or ventana_cerrada():
-            break
-        if k in (ord("f"), ord("F")):
-            alternar_completa()
-        elif k in TECLAS_DER:
-            i = (i + 1) % len(rutas)
-        elif k in TECLAS_IZQ:
-            i = (i - 1) % len(rutas)
-
+    cam.cerrar()
     cv2.destroyAllWindows()
     return 0
 
 
 def main():
     ap = argparse.ArgumentParser(description="Demo en vivo del clasificador SERB v1.")
-    ap.add_argument("--carpeta", help="recorrer imagenes de esta carpeta en vez de usar la camara")
+    ap.add_argument("--carpeta", default=str(GALERIA_DEFECTO),
+                    help="carpeta de imagenes del modo galeria (default demo/galeria)")
     ap.add_argument("--camara", default="0", help="indice de camara o ruta a video (default 0)")
     ap.add_argument("--frames", type=int, default=5,
                     help="frames seguidos promediados por captura (default 5)")
@@ -478,7 +580,7 @@ def main():
 
     print("Cargando modelo...", flush=True)
     pred = Predictor(umbral=a.umbral, corte_riesgo=a.corte_riesgo, device="cpu" if a.cpu else None)
-    return modo_carpeta(pred, a) if a.carpeta else modo_camara(pred, a)
+    return sesion(pred, a)
 
 
 if __name__ == "__main__":

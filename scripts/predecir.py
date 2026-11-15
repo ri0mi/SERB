@@ -46,8 +46,8 @@ MODELO_VERSION = "v1 (modelo_I_full)"
 # "segura": ante la duda no se reporta como inocua.
 SEVERIDAD = ["segura", "desconocida", "irritante", "toxica", "letal"]
 
-AVISO_GENERAL = ("Herramienta de apoyo a la identificacion. No sustituye la "
-                 "determinacion botanica profesional. No debe usarse para "
+AVISO_GENERAL = ("Herramienta de apoyo a la identificación. No sustituye la "
+                 "determinación botánica profesional. No debe usarse para "
                  "decidir el consumo de ninguna planta.")
 AVISO_NO_ID = ("No se pudo identificar con suficiente confianza. Puede tratarse "
                "de una especie fuera del catalogo. Trate la planta como de "
